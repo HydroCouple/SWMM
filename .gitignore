@@ -37,3 +37,7 @@ Makefile*
 # QtCtreator CMake
 CMakeLists.txt.user*
 
+# SWMM Report and Output files
+*.rpt
+*.out 
+

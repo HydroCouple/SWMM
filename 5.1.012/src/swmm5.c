@@ -242,7 +242,7 @@ int  main(int argc, char *argv[])
 #endif
 
 
-Project * DLLEXPORT swmm_createProject()
+Project* DLLEXPORT swmm_createProject()
 {
   Project *project = (Project*) malloc(sizeof(Project));
   return project;

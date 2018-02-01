@@ -551,6 +551,8 @@ typedef struct
     double        perimeter;
     double        orificeDischargeCoeff;
     int           depthSetExternally;
+    double        overflowAndInflow;        // surcharge overflow rate (cfs) for coupling both positive and negative
+
 
 }  TNode;
 

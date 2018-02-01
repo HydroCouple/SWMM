@@ -41,6 +41,11 @@
 #ifndef DATETIME_H
 #define DATETIME_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 typedef double DateTime;
 
 #define Y_M_D 0
@@ -84,5 +89,10 @@ void datetime_setDateFormat(int fmt);
 DateTime datetime_addSeconds(DateTime date1, double seconds);
 DateTime datetime_addDays(DateTime date1, DateTime date2);
 long     datetime_timeDiff(DateTime date1, DateTime date2);
+
+
+#ifdef __cplusplus
+}   // matches the linkage specification from above */
+#endif
 
 #endif //DATETIME_H

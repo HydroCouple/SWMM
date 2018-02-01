@@ -64,7 +64,7 @@ extern "C" {
 
 typedef struct Project Project;
 
-Project *DLLEXPORT swwm_createProject();
+Project* DLLEXPORT swmm_createProject();
 void DLLEXPORT swmm_deleteProject(Project* project);
 int  DLLEXPORT  swmm_run(Project *project, char* f1, char* f2, char* f3);
 int  DLLEXPORT  swmm_open(Project *project, char* f1, char* f2, char* f3);

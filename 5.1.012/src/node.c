@@ -263,6 +263,14 @@ void node_initState(Project *project, int j)
     project->Node[j].oldVolume = node_getVolume(project, j, project->Node[j].oldDepth);
     project->Node[j].newVolume = project->Node[j].oldVolume;
 
+
+    // --- HydroCouple Addded
+    project->Node[j].area = 1.75;
+    project->Node[j].perimeter = 2.75;
+    project->Node[j].orificeDischargeCoeff = 0.60;
+    project->Node[j].depthSetExternally = 0;
+
+
     // --- initialize water quality state
     for (p = 0; p < project->Nobjects[POLLUT]; p++)
     {

@@ -716,7 +716,11 @@ void setNodeDepth(Project *project, int i, double dt)
     {
         yNew = getFloodedDepth(project, i, canPond, dV, yNew, yMax, dt);
     }
-    else project->Node[i].newVolume = node_getVolume(project, i, yNew);
+    else
+    {
+      project->Node[i].newVolume = node_getVolume(project, i, yNew);
+      project->Node[i].overflowAndInflow = 0.0;
+    }
 
     // --- compute change in depth w.r.t. time
     project->Xnode[i].dYdT = fabs(yNew - yOld) / dt;
@@ -741,19 +745,26 @@ double getFloodedDepth(Project *project, int i, int canPond, double dV, double y
 //  Purpose: computes depth, volume and overflow for a flooded node.
 //
 {
+    double overflow = 0.0;
+
     if ( canPond == FALSE )
     {
-        project->Node[i].overflow = dV / dt;
+        overflow = dV / dt;
         project->Node[i].newVolume = project->Node[i].fullVolume;
         yNew = yMax;
     }
     else
     {
         project->Node[i].newVolume = MAX((project->Node[i].oldVolume+dV), project->Node[i].fullVolume);
-        project->Node[i].overflow = (project->Node[i].newVolume -
+        overflow = (project->Node[i].newVolume -
             MAX(project->Node[i].oldVolume, project->Node[i].fullVolume)) / dt;
     }
-    if ( project->Node[i].overflow < FUDGE ) project->Node[i].overflow = 0.0;
+
+    project->Node[i].overflow = overflow;
+    project->Node[i].overflowAndInflow = overflow;
+
+    if (project->Node[i].overflow < FUDGE )
+        project->Node[i].overflow = 0.0;
     return yNew;
 
 }

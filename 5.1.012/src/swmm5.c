@@ -242,13 +242,13 @@ int  main(int argc, char *argv[])
 #endif
 
 
-Project * DLLEXPORT createProjectObject()
+Project * DLLEXPORT swmm_createProject()
 {
   Project *project = (Project*) malloc(sizeof(Project));
   return project;
 }
 
-void  DLLEXPORT deleteProjectObject(Project *project)
+void  DLLEXPORT swmm_deleteProject(Project *project)
 {
   FREE(project);
 }

@@ -20,10 +20,7 @@
 
 #ifdef SWMM_TEST
 
-#include <omp.h>
 #include <QtTest/QtTest>
-
-
 
 class SWMMTestClass : public QObject
 {

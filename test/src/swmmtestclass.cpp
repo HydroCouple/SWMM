@@ -17,6 +17,7 @@
  * \warning
  * \todo
  */
+#ifdef SWMM_TEST
 
 #include <omp.h>
 
@@ -103,3 +104,5 @@ void SWMMTestClass::cleanup()
 {
 
 }
+
+#endif

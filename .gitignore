@@ -28,6 +28,9 @@ Makefile*
 
 # QtCreator
 
+[Bb]uild/
+[Ll]ib/
+
 *.autosave
 
 # QtCtreator Qml

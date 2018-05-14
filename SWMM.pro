@@ -12,6 +12,7 @@ QT -= gui
 
 DEFINES += SWMM_LIBRARY
 DEFINES += USE_OPENMP
+DEFINES += USE_MPI
 #DEFINES += SWMM_TEST
 
 contains(DEFINES,SWMM_LIBRARY){
@@ -149,6 +150,23 @@ macx{
      } else {
       message("OpenMP disabled")
      }
+
+    contains(DEFINES,USE_MPI){
+
+        QMAKE_CC = /usr/local/bin/mpicc
+        QMAKE_CXX = /usr/local/bin/mpicxx
+        QMAKE_LINK = /usr/local/bin/mpicxx
+
+        QMAKE_CFLAGS += $$system(mpicc --showme:compile)
+        QMAKE_CXXFLAGS += $$system(mpic++ --showme:compile)
+        QMAKE_LFLAGS += $$system(mpic++ --showme:link)
+
+        LIBS += -L/usr/local/lib/ -lmpi
+
+      message("MPI enabled")
+    } else {
+      message("MPI disabled")
+    }
 }
 
 linux{

@@ -321,8 +321,8 @@ int  setManning(Project *project, double n[])
 
 int  setParams(Project *project, int j, char* id, double x[])
 //
-//  Input:   j = transect index
-//           id = transect ID name
+//  Input:   j   = transect index
+//           id  = transect ID name
 //           x[] = array of parameter values
 //  Output:  returns an error code
 //  Purpose: assigns parameter values to current transect being processed.
@@ -330,15 +330,15 @@ int  setParams(Project *project, int j, char* id, double x[])
 {
     if ( j < 0 || j >= project->Ntransects ) return ERR_NUMBER;
     project->Transect[j].ID = id;                         // ID name
-    project->Xleftbank = x[3] / UCF(project, LENGTH);              // left overbank location
-    project->Xrightbank = x[4] / UCF(project, LENGTH);             // right overbank location
+    project->Xleftbank  = x[3] / UCF(project, LENGTH);    // left overbank location
+    project->Xrightbank = x[4] / UCF(project, LENGTH);    // right overbank location
     project->Lfactor = x[7];                              // channel/bank length
     if ( project->Lfactor == 0.0 ) project->Lfactor = 1.0;
     project->Xfactor = x[8];                              // station location multiplier
     if ( project->Xfactor == 0.0 ) project->Xfactor = 1.0;
-    project->Xleftbank *= project->Xfactor;                        // adjusted left bank
-    project->Xrightbank *= project->Xfactor;                       // adjusted right bank
-    project->Yfactor = x[9] / UCF(project, LENGTH);                // elevation offset
+    project->Xleftbank *= project->Xfactor;               // adjusted left bank
+    project->Xrightbank *= project->Xfactor;              // adjusted right bank
+    project->Yfactor = x[9] / UCF(project, LENGTH);       // elevation offset
     project->Nstations = 0;
     return 0;
 }
@@ -541,8 +541,8 @@ double getFlow(Project *project, int k, double a, double wp, int findFlow)
     {
         // --- find value of Manning's n to use
         n = project->Nchannel;
-        if ( project->Station[k-1] < project->Xleftbank ) n = project->Nleft;
-        if ( project->Station[k] > project->Xrightbank )  n = project->Nright;
+        if ( project->Station[k-1] < project->Xleftbank  ) n = project->Nleft;
+        if ( project->Station[k]   > project->Xrightbank ) n = project->Nright;
 
         // --- compute flow through flow area
         return PHI / n * a * pow(a/wp, 2./3.);

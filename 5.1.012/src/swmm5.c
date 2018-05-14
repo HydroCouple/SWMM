@@ -129,6 +129,8 @@
 #include "globals.h"                   // declaration of all global variables
 
 #include "swmm5.h"                     // declaration of exportable functions
+#include "dataexchangecache.h"
+
 //   callable from other programs
 #define  MAX_EXCEPTIONS 100            // max. number of exceptions handled
 
@@ -245,6 +247,11 @@ int  main(int argc, char *argv[])
 Project* DLLEXPORT swmm_createProject()
 {
   Project *project = (Project*) malloc(sizeof(Project));
+  project->IsOpenFlag = FALSE;
+  project->IsStartedFlag = FALSE;
+  project->SaveResultsFlag = TRUE;
+
+
   return project;
 }
 
@@ -353,14 +360,17 @@ int DLLEXPORT swmm_open(Project *project, char* f1, char* f2, char* f3)
 
     // --- retrieve project data from input file
     project_readInput(project);
-    if ( project->ErrorCode ) return error_getCode(project->ErrorCode);                      //(5.1.011)
+
+    if ( project->ErrorCode )
+      return error_getCode(project->ErrorCode);                      //(5.1.011)
 
     // --- write project title to report file & validate data
     report_writeTitle(project);
     project_validate(project);
 
     // --- write input summary to report file if requested
-    if ( project->RptFlags.input ) inputrpt_writeInput(project);
+    if ( project->RptFlags.input )
+      inputrpt_writeInput(project);
   }
 
 #ifdef EXH                                                                     //(5.1.011)
@@ -608,7 +618,8 @@ int DLLEXPORT swmm_end(Project *project)
   if ( project->IsStartedFlag )
   {
     // --- write ending records to binary output file
-    if ( project->Fout.file ) output_end(project);
+    if ( project->Fout.file )
+      output_end(project);
 
     // --- report mass balance results and system statistics
     if ( !project->ErrorCode )
@@ -669,6 +680,8 @@ int DLLEXPORT swmm_close(Project *project)
   }
   project->IsOpenFlag = FALSE;
   project->IsStartedFlag = FALSE;
+
+  clearDataCache(project);
 
   return 0;
 }

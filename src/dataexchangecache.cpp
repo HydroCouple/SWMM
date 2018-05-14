@@ -20,8 +20,9 @@
 
 
 #include "stdafx.h"
-#include <unordered_map>
 
+#include <map>
+#include <unordered_map>
 
 #include "dataexchangecache.h"
 #include "headers.h"
@@ -29,9 +30,10 @@
 
 using namespace std;
 
-unordered_map<Project*, unordered_map<int, double> > NodeLateralInflows;
-unordered_map<Project*, unordered_map<int, double> > NodeDepths;
-unordered_map<Project*, unordered_map<int, double> > SubcatchRainfall;
+unordered_map<Project*, unordered_map<int, double>> NodeLateralInflows;
+unordered_map<Project*, unordered_map<int, double>> NodeDepths;
+unordered_map<Project*, unordered_map<int, double>> SubcatchRainfall;
+unordered_map<Project*, unordered_map<int, map<double,double>>> XSections;
 
 typedef struct OpenMIDataCache OpenMIDataCache;
 

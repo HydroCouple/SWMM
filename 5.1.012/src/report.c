@@ -120,9 +120,12 @@ int report_readOptions(Project *project, char* tok[], int ntoks)
     {
       case 0: // Input
         m = findmatch(tok[1], NoYesWords);
-        if      ( m == YES ) project->RptFlags.input = TRUE;
-        else if ( m == NO )  project->RptFlags.input = FALSE;
-        else                 return error_setInpError(ERR_KEYWORD, tok[1]);
+        if      ( m == YES )
+          project->RptFlags.input = TRUE;
+        else if ( m == NO )
+          project->RptFlags.input = FALSE;
+        else
+          return error_setInpError(ERR_KEYWORD, tok[1]);
         return 0;
 
       case 1: // Continuity
@@ -159,10 +162,13 @@ int report_readOptions(Project *project, char* tok[], int ntoks)
 
       default: return error_setInpError(ERR_KEYWORD, tok[1]);
     }
+
     k = (char)findmatch(tok[1], NoneAllWords);
+
     if ( k < 0 )
     {
         k = SOME;
+
         for (t = 1; t < ntoks; t++)
         {
             j = project_findObject(project, m, tok[t]);
@@ -175,6 +181,8 @@ int report_readOptions(Project *project, char* tok[], int ntoks)
             }
         }
     }
+
+
     switch ( m )
     {
       case SUBCATCH: project->RptFlags.subcatchments = k;  break;

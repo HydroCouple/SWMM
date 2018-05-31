@@ -35,8 +35,8 @@ void SWMMTestClass::concurrentSameInput()
   QBENCHMARK
   {
     {
-      Project *project1 = createProjectObject();
-      Project *project2 = createProjectObject();
+      Project *project1 = swmm_createProject();
+      Project *project2 = swmm_createProject();
 
 #pragma omp parallel sections
       {
@@ -89,15 +89,40 @@ void SWMMTestClass::concurrentSameInput()
       QVERIFY2(project1->ErrorCode == 0, error1.toStdString().c_str());
       QVERIFY2(project2->ErrorCode == 0, error2.toStdString().c_str());
 
-      deleteProjectObject(project1);
-      deleteProjectObject(project2);
+      swmm_deleteProject(project1);
+      swmm_deleteProject(project2);
     }
   }
 }
 
 void SWMMTestClass::concurrentDifferentInputs()
 {
+  QBENCHMARK
+  {
+    Project *project1 = swmm_createProject();
 
+    std::string inpuFileStr = "./../../examples/test1/test1.inp";
+    char *inputFile = new char[inpuFileStr.size() + 1];
+    std::strcpy(inputFile, inpuFileStr.c_str());
+
+    std::string reportFileStr = "./../../examples/test1/test1.rpt";
+    char *reportFile = new char[reportFileStr.size() + 1];
+    std::strcpy(reportFile, reportFileStr.c_str());
+
+    std::string outputFileStr = "./../../examples/test1/test1.out";
+    char *outputFile = new char[outputFileStr.size() + 1];
+    std::strcpy(outputFile, outputFileStr.c_str());
+
+    swmm_run(project1, inputFile, reportFile, outputFile);
+
+    delete[] inputFile;
+    delete[] reportFile;
+    delete[] outputFile;
+
+    QString error1(project1->ErrorMsg);
+    QVERIFY2(project1->ErrorCode == 0, error1.toStdString().c_str());
+    swmm_deleteProject(project1);
+  }
 }
 
 void SWMMTestClass::cleanup()

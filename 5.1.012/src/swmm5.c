@@ -250,7 +250,7 @@ Project* DLLEXPORT swmm_createProject()
   project->IsOpenFlag = FALSE;
   project->IsStartedFlag = FALSE;
   project->SaveResultsFlag = TRUE;
-
+  project->ErrorCode = 0;
 
   return project;
 }

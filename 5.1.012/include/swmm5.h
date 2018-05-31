@@ -46,13 +46,13 @@
 // --- define DLLEXPORT
 
 #ifdef WINDOWS
-  #define DLLEXPORT __declspec(dllexport) __stdcall
+#define DLLEXPORT __declspec(dllexport) __stdcall
 #else
 #if __GNUC__ >= 4
-  #define DLLEXPORT __attribute__ ((visibility ("default")))
+#define DLLEXPORT __attribute__ ((visibility ("default")))
 #else
-  #define DLLEXPORT
-  #define DLLEXPORT
+#define DLLEXPORT
+#define DLLEXPORT
 #endif
 #endif
 

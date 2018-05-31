@@ -386,10 +386,12 @@ void output_openOutFile(Project *project)
 //
 {
     // --- close output file if already opened
-    if (project->Fout.file != NULL) fclose(project->Fout.file);
+    if (project->Fout.file != NULL)
+      fclose(project->Fout.file);
 
     // --- else if file name supplied then set file mode to SAVE
-    else if (strlen(project->Fout.name) != 0) project->Fout.mode = SAVE_FILE;
+    else if (strlen(project->Fout.name) != 0)
+      project->Fout.mode = SAVE_FILE;
 
     // --- otherwise set file mode to SCRATCH & generate a name
     else

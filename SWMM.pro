@@ -71,7 +71,8 @@ equals(VERSION,5.1.012){
                ./5.1.012/include/odesolve.h \
                ./5.1.012/include/swmm5.h \
                ./5.1.012/include/text.h \
-               ./5.1.012/include/xsect.dat
+               ./5.1.012/include/xsect.dat \
+               ./swmm5_iface/include/swmm5_iface.h
 
     SOURCES += ./5.1.012/src/climate.c \
                ./5.1.012/src/controls.c \
@@ -124,7 +125,8 @@ equals(VERSION,5.1.012){
                ./5.1.012/src/toposort.c \
                ./5.1.012/src/transect.c \
                ./5.1.012/src/treatmnt.c \
-               ./5.1.012/src/xsect.c 
+               ./5.1.012/src/xsect.c \
+               ./swmm5_iface/src/swmm5_iface.c
 }
 
 

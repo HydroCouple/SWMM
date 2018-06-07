@@ -15,6 +15,9 @@ DEFINES += USE_OPENMP
 DEFINES += USE_MPI
 #DEFINES += SWMM_TEST
 
+CONFIG += c++11
+CONFIG += debug_and_release
+
 contains(DEFINES,SWMM_LIBRARY){
   TEMPLATE = lib
   message("Compiling as library")
@@ -24,11 +27,10 @@ contains(DEFINES,SWMM_LIBRARY){
   message("Compiling as application")
 }
 
-CONFIG += c++11
+*msvc* { # visual studio spec filter
+      QMAKE_CXXFLAGS += /MP /O2
+  }
 
-linux{
-CONFIG += debug_and_release
-}
 
 PRECOMPILED_HEADER = ./include/stdafx.h
 
@@ -44,6 +46,11 @@ SOURCES +=./src/stdafx.cpp \
           ./src/dataexchangecache.cpp \
           ./test/src/swmmtestdriver.cpp \
           ./test/src/swmmtestclass.cpp
+
+win32{
+  INCLUDEPATH += $$PWD/graphviz/win32/include \
+                 $$(MSMPI_INC)/
+}
 
 equals(VERSION,5.1.012){
 
@@ -201,6 +208,28 @@ INCLUDEPATH += /usr/include
       message("OpenMP enabled")
      } else {
       message("OpenMP disabled")
+     }
+}
+
+win32{
+
+    contains(DEFINES,USE_OPENMP){
+
+        QMAKE_CFLAGS += /openmp
+        QMAKE_CXXFLAGS += /openmp
+        QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CXXFLAGS /MD
+        QMAKE_CXXFLAGS_DEBUG = $$QMAKE_CXXFLAGS /MDd
+        message("OpenMP enabled")
+     } else {
+
+      message("OpenMP disabled")
+     }
+
+    contains(DEFINES,USE_MPI){
+       LIBS += -L$$(MSMPI_LIB64)/ -lmsmpi
+       message("MPI enabled")
+     } else {
+      message("MPI disabled")
      }
 }
 

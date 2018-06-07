@@ -397,7 +397,7 @@ void output_openOutFile(Project *project)
     else
     {
         project->Fout.mode = SCRATCH_FILE;
-        getTempFileName(project->Fout.name);
+        getTempFileName(project, project->Fout.name);
     }
 
     // --- try to open the file

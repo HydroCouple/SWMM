@@ -530,7 +530,7 @@ double   UCF(Project *project, int quantity);                   // units convers
 int      getInt(char *s, int *y);             // get integer from string
 int      getFloat(char *s, float *y);         // get float from string
 int      getDouble(char *s, double *y);       // get double from string
-char*    getTempFileName(char *s);            // get temporary file name
+char*    getTempFileName(Project *project, char *s);            // get temporary file name
 int      findmatch(char *s, char *keyword[]); // search for matching keyword
 int      match(char *str, char *substr);      // true if substr matches part of str
 int      strcomp(char *s1, char *s2);         // case insensitive string compare

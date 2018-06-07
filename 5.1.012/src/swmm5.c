@@ -176,7 +176,7 @@ static void execRouting(Project *project);                                      
 
 // Exception filtering function
 #ifdef EXH                                                                     //(5.1.011)
-static int  xfilter(int xc, char* module, double elapsedTime, long step);      //(5.1.011)
+static int  xfilter(Project *project, int xc, char* module, double elapsedTime, long step);      //(5.1.011)
 #endif
 
 //-----------------------------------------------------------------------------
@@ -244,7 +244,7 @@ int  main(int argc, char *argv[])
 #endif
 
 
-Project* DLLEXPORT swmm_createProject()
+Project* swmm_createProject()
 {
   Project *project = (Project*) malloc(sizeof(Project));
   project->IsOpenFlag = FALSE;
@@ -375,7 +375,7 @@ int DLLEXPORT swmm_open(Project *project, char* f1, char* f2, char* f3)
 
 #ifdef EXH                                                                     //(5.1.011)
   // --- end of try loop; handle exception here
-  __except(xfilter(GetExceptionCode(), "swmm_open", 0.0, 0))                 //(5.1.011)
+  __except(xfilter(project, GetExceptionCode(), "swmm_open", 0.0, 0))                 //(5.1.011)
   {
     project->ErrorCode = ERR_SYSTEM;
   }
@@ -466,7 +466,7 @@ int DLLEXPORT swmm_start(Project *project, int saveResults)
 
 #ifdef EXH                                                                     //(5.1.011)
   // --- end of try loop; handle exception here
-  __except(xfilter(GetExceptionCode(), "swmm_start", 0.0, 0))                //(5.1.011)
+  __except(xfilter(project, GetExceptionCode(), "swmm_start", 0.0, 0))                //(5.1.011)
   {
     project->ErrorCode = ERR_SYSTEM;
   }
@@ -525,7 +525,7 @@ int DLLEXPORT swmm_step(Project *project, double* elapsedTime)                  
 
 #ifdef EXH                                                                     //(5.1.011)
   // --- end of try loop; handle exception here
-  __except(xfilter(GetExceptionCode(), "swmm_step", project->ElapsedTime, project->StepCount)) //(5.1.011)
+  __except(xfilter(project, GetExceptionCode(), "swmm_step", project->ElapsedTime, project->StepCount)) //(5.1.011)
   {
     project->ErrorCode = ERR_SYSTEM;
   }
@@ -590,7 +590,7 @@ void execRouting(Project *project)                                              
 
 #ifdef EXH                                                                     //(5.1.011)
   // --- end of try loop; handle exception here
-  __except(xfilter(GetExceptionCode(), "execRouting",                        //(5.1.011)
+  __except(xfilter(project, GetExceptionCode(), "execRouting",                        //(5.1.011)
                    project->ElapsedTime, project->StepCount))                                  //(5.1.011)
   {
     project->ErrorCode = ERR_SYSTEM;
@@ -818,7 +818,7 @@ int  strcomp(char *s1, char *s2)
 
 //=============================================================================
 
-char* getTempFileName(char* fname)
+char* getTempFileName(Project *project, char* fname)
 //
 //  Input:   fname = file name string (with max size of MAXFNAME)
 //  Output:  returns pointer to file name
@@ -832,10 +832,10 @@ char* getTempFileName(char* fname)
   char* dir = NULL;
 
   // --- set dir to user's choice of a temporary directory
-  if (strlen(TempDir) > 0)
+  if (strlen(project->TempDir) > 0)
   {
-    _mkdir(TempDir);
-    dir = TempDir;
+    _mkdir(project->TempDir);
+    dir = project->TempDir;
   }
 
   // --- use _tempnam to get a pointer to an unused file name
@@ -919,7 +919,7 @@ void  writecon(char *s)
 //=============================================================================
 
 #ifdef EXH                                                                     //(5.1.011)
-int xfilter(int xc, char* module, double elapsedTime, long step)               //(5.1.011)
+int xfilter(Project* project, int xc, char* module, double elapsedTime, long step)               //(5.1.011)
 //
 //  Input:   xc          = exception code
 //           module      = name of code module where exception was handled     //(5.1.011)
@@ -985,7 +985,7 @@ int xfilter(int xc, char* module, double elapsedTime, long step)               /
     strcat(xmsg, " --- execution halted.");
     rc = EXCEPTION_EXECUTE_HANDLER;
   }
-  report_writeLine(xmsg);
+  report_writeLine(project, xmsg);
   return rc;
 }
 #endif

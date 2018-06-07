@@ -13,6 +13,10 @@
 #include <omp.h>
 #endif
 
+#ifdef WINDOWS
+#include <Windows.h>
+#endif
+
 //#include "globals.h"
 
 //int    faceData->SWMM_Nperiods;                  // number of reporting periods

@@ -1138,7 +1138,7 @@ int openNewRdiiFile(Project *project)
     int j;                             // node index
 
     // --- create a temporary file name if scratch file being used
-    if ( project->Frdii.mode == SCRATCH_FILE ) getTempFileName(project->Frdii.name);
+    if ( project->Frdii.mode == SCRATCH_FILE ) getTempFileName(project, project->Frdii.name);
 
     // --- open the RDII file as a formatted text file
     project->Frdii.file = fopen(project->Frdii.name, "w+b");

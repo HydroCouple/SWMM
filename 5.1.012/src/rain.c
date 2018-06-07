@@ -142,7 +142,7 @@ void  rain_open(Project *project)
     else switch ( project->Frain.mode )
     {
       case SCRATCH_FILE:
-        getTempFileName(project->Frain.name);
+        getTempFileName(project, project->Frain.name);
         if ( (project->Frain.file = fopen(project->Frain.name, "w+b")) == NULL)
         {
             report_writeErrorMsg(project, ERR_RAIN_FILE_SCRATCH, "");

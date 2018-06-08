@@ -48,8 +48,7 @@ SOURCES +=./src/stdafx.cpp \
           ./test/src/swmmtestclass.cpp
 
 win32{
-  INCLUDEPATH += $$PWD/graphviz/win32/include \
-                 $$(MSMPI_INC)/
+  INCLUDEPATH += $$(MSMPI_INC)/
 }
 
 equals(VERSION,5.1.012){
@@ -225,12 +224,32 @@ win32{
       message("OpenMP disabled")
      }
 
-    contains(DEFINES,USE_MPI){
-       LIBS += -L$$(MSMPI_LIB64)/ -lmsmpi
-       message("MPI enabled")
-     } else {
-      message("MPI disabled")
-     }
+    #Windows vspkg package manager installation path
+    VSPKGDIR = C:/vcpkg/installed/x64-windows
+
+    INCLUDEPATH += $${VSPKGDIR}/include \
+                   $${VSPKGDIR}/include/gdal
+
+    message ($$(VSPKGDIR))
+
+    CONFIG(debug, debug|release) {
+
+            contains(DEFINES,USE_MPI){
+               LIBS += -L$${VSPKGDIR}/debug/lib -lmsmpi
+               message("MPI enabled")
+            } else {
+              message("MPI disabled")
+            }
+
+        } else {
+
+            contains(DEFINES,USE_MPI){
+               LIBS += -L$${VSPKGDIR}/lib -lmsmpi
+               message("MPI enabled")
+            } else {
+              message("MPI disabled")
+            }
+    }
 }
 
 CONFIG(debug, debug|release) {

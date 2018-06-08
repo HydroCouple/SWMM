@@ -44,3 +44,10 @@ CMakeLists.txt.user*
 *.rpt
 *.out 
 *.rat
+*.pch
+*.obj
+*.lib
+*.exp
+*.exe
+*.obj
+*.pch

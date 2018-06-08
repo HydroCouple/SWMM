@@ -52,7 +52,7 @@
 #define DLLEXPORT __attribute__ ((visibility ("default")))
 #else
 #define DLLEXPORT
-#define DLLEXPORT
+#define DLLEXPORT_S
 #endif
 #endif
 
@@ -65,7 +65,7 @@ extern "C" {
 typedef struct Project Project;
 
 #ifdef WINDOWS
-  __declspec(dllexport) Project* swmm_createProject();
+  __declspec(dllexport) Project* __stdcall swmm_createProject();
 #else
  Project* DLLEXPORT swmm_createProject();
 #endif

@@ -41,6 +41,21 @@
 #ifndef DATETIME_H
 #define DATETIME_H
 
+#undef WINDOWS
+#ifdef _WIN32
+#define WINDOWS
+#endif
+#ifdef __WIN32__
+#define WINDOWS
+#endif
+
+
+#ifdef WINDOWS
+  #define DLLEXPORT __declspec(dllexport)
+#else
+  #define DLLEXPORT
+#endif
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -60,8 +75,8 @@ DateTime datetime_encodeDate(int year, int month, int day);
 DateTime datetime_encodeTime(int hour, int minute, int second);
 
 // Functions for decoding a DateTime value to a date and time
-void datetime_decodeDate(DateTime date, int* y, int* m, int* d);
-void datetime_decodeTime(DateTime time, int* h, int* m, int* s);
+void DLLEXPORT datetime_decodeDate(DateTime date, int* y, int* m, int* d);
+void DLLEXPORT datetime_decodeTime(DateTime time, int* h, int* m, int* s);
 
 // Function for finding day of week for a date (1 = Sunday)
 // month of year, days per month, and hour of day

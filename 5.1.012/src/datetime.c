@@ -50,14 +50,14 @@
 //  Constants
 //-----------------------------------------------------------------------------
 static const char* MonthTxt[] =
-    {"JAN", "FEB", "MAR", "APR",
-     "MAY", "JUN", "JUL", "AUG",
-     "SEP", "OCT", "NOV", "DEC"};
+{"JAN", "FEB", "MAR", "APR",
+ "MAY", "JUN", "JUL", "AUG",
+ "SEP", "OCT", "NOV", "DEC"};
 static const int DaysPerMonth[2][12] =      // days per month
-    {{31, 28, 31, 30, 31, 30,               // normal years
-      31, 31, 30, 31, 30, 31},
-     {31, 29, 31, 30, 31, 30,               // leap years
-      31, 31, 30, 31, 30, 31}};
+{{31, 28, 31, 30, 31, 30,               // normal years
+        31, 31, 30, 31, 30, 31},
+{31, 29, 31, 30, 31, 30,               // leap years
+        31, 31, 30, 31, 30, 31}};
 static const int DateDelta = 693594;        // days since 01/01/00
 static const double SecsPerDay = 86400.;    // seconds per day
 
@@ -100,8 +100,8 @@ int isLeapYear(int year)
 
 {
     if ((year % 4   == 0)
-    && ((year % 100 != 0)
-    ||  (year % 400 == 0))) return 1;
+            && ((year % 100 != 0)
+                ||  (year % 400 == 0))) return 1;
     else return 0;
 }
 
@@ -118,8 +118,8 @@ int  datetime_findMonth(char* month)
     for (i = 0; i < 12; i++)
     {
         if (UCHAR(month[0]) == MonthTxt[i][0]
-        &&  UCHAR(month[1]) == MonthTxt[i][1]
-        &&  UCHAR(month[2]) == MonthTxt[i][2]) return i+1;
+                &&  UCHAR(month[1]) == MonthTxt[i][1]
+                &&  UCHAR(month[2]) == MonthTxt[i][2]) return i+1;
     }
     return 0;
 }
@@ -138,11 +138,11 @@ DateTime datetime_encodeDate(int year, int month, int day)
     int i, j;
     i = isLeapYear(year);
     if ((year >= 1)
-    && (year <= 9999)
-    && (month >= 1)
-    && (month <= 12)
-    && (day >= 1)
-    && (day <= DaysPerMonth[i][month-1]))
+            && (year <= 9999)
+            && (month >= 1)
+            && (month <= 12)
+            && (day >= 1)
+            && (day <= DaysPerMonth[i][month-1]))
     {
         for (j = 0; j < month-1; j++) day += DaysPerMonth[i][j];
         i = year - 1;
@@ -164,8 +164,8 @@ DateTime datetime_encodeTime(int hour, int minute, int second)
 {
     int s;
     if ((hour >= 0)
-    && (minute >= 0)
-    && (second >= 0))
+            && (minute >= 0)
+            && (second >= 0))
     {
         s = (hour * 3600 + minute * 60 + second);
         return (double)s/SecsPerDay;
@@ -174,7 +174,6 @@ DateTime datetime_encodeTime(int hour, int minute, int second)
 }
 
 //=============================================================================
-
 void datetime_decodeDate(DateTime date, int* year, int* month, int* day)
 
 //  Input:   date = encoded date/time value
@@ -274,16 +273,16 @@ void datetime_dateToStr(DateTime date, char* s)
     datetime_decodeDate(date, &y, &m, &d);
     switch (DateFormat)
     {
-      case Y_M_D:
+    case Y_M_D:
         sprintf(dateStr, "%4d-%3s-%02d", y, MonthTxt[m-1], d);
         break;
 
-      case M_D_Y:
+    case M_D_Y:
         //sprintf(dateStr, "%3s-%02d-%4d", MonthTxt[m-1], d, y);
         sprintf(dateStr, "%02d/%02d/%04d", m, d, y);
         break;
 
-      default:
+    default:
         sprintf(dateStr, "%02d-%3s-%4d", d, MonthTxt[m-1], y);
     }
     strcpy(s, dateStr);
@@ -323,7 +322,7 @@ int datetime_strToDate(char* s, DateTime* d)
     {
         switch (DateFormat)
         {
-          case Y_M_D:
+        case Y_M_D:
             n = sscanf(s, "%d%c%d%c%d", &yr, &sep1, &mon, &sep2, &day);
             if ( n < 3 )
             {
@@ -333,7 +332,7 @@ int datetime_strToDate(char* s, DateTime* d)
             }
             break;
 
-          case D_M_Y:
+        case D_M_Y:
             n = sscanf(s, "%d%c%d%c%d", &day, &sep1, &mon, &sep2, &yr);
             if ( n < 3 )
             {
@@ -343,7 +342,7 @@ int datetime_strToDate(char* s, DateTime* d)
             }
             break;
 
-          default: // M_D_Y
+        default: // M_D_Y
             n = sscanf(s, "%d%c%d%c%d", &mon, &sep1, &day, &sep2, &yr);
             if ( n < 3 )
             {
@@ -548,7 +547,7 @@ void datetime_getTimeStamp(int fmt, DateTime aDate, int stampSize, char* timeSta
     int  oldDateFormat = DateFormat;
     
     if ( stampSize < DATE_STR_SIZE + TIME_STR_SIZE + 2 ) return;
-    datetime_setDateFormat(fmt);     
+    datetime_setDateFormat(fmt);
     datetime_dateToStr(aDate, dateStr);
     DateFormat = oldDateFormat;
     datetime_timeToStr(aDate, timeStr);

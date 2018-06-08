@@ -48,6 +48,22 @@
 #ifndef FUNCS_H
 #define FUNCS_H
 
+
+#undef WINDOWS
+#ifdef _WIN32
+#define WINDOWS
+#endif
+#ifdef __WIN32__
+#define WINDOWS
+#endif
+
+
+#ifdef WINDOWS
+  #define DLLEXPORT __declspec(dllexport)
+#else
+  #define DLLEXPORT
+#endif
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -58,16 +74,16 @@ typedef struct Project Project;
 //-----------------------------------------------------------------------------
 //   Project Manager Methods
 //-----------------------------------------------------------------------------
-void     project_open(Project *project, char *f1, char *f2, char *f3);
-void     project_close(Project *project);
+void  DLLEXPORT  project_open(Project *project, char *f1, char *f2, char *f3);
+void  DLLEXPORT  project_close(Project *project);
 
-void     project_readInput(Project *project);
-int      project_readOption(Project *project, char* s1, char* s2);
-void     project_validate(Project *project);
-int      project_init(Project *project);
+void  DLLEXPORT   project_readInput(Project *project);
+int   DLLEXPORT   project_readOption(Project *project, char* s1, char* s2);
+void  DLLEXPORT   project_validate(Project *project);
+int   DLLEXPORT   project_init(Project *project);
 
 int      project_addObject(Project *project, int type, char* id, int n);
-int      project_findObject(Project *project, int type, char* id);
+int   DLLEXPORT  project_findObject(Project *project, int type, char* id);
 char*    project_findID(Project *project, int type, char* id);
 
 double** project_createMatrix(int nrows, int ncols);
@@ -454,9 +470,9 @@ double  xsect_getYofA(Project *project, TXsect* xsect, double area);
 double  xsect_getRofA(Project *project, TXsect* xsect, double area);
 double  xsect_getAofS(Project *project, TXsect* xsect, double sFactor);
 double  xsect_getdSdA(Project *project, TXsect* xsect, double area);
-double  xsect_getAofY(Project *project, TXsect* xsect, double y);
+double  DLLEXPORT xsect_getAofY(Project *project, TXsect* xsect, double y);
 double  xsect_getRofY(Project *project, TXsect* xsect, double y);
-double  xsect_getWofY(Project *project, TXsect* xsect, double y);
+double  DLLEXPORT xsect_getWofY(Project *project, TXsect* xsect, double y);
 double  xsect_getYcrit(Project *project, TXsect* xsect, double q);
 
 //-----------------------------------------------------------------------------
@@ -526,7 +542,7 @@ double  table_tseriesLookup(TTable* table, double t, char extend);
 //-----------------------------------------------------------------------------
 //   Utility Methods
 //-----------------------------------------------------------------------------
-double   UCF(Project *project, int quantity);                   // units conversion factor
+double DLLEXPORT  UCF(Project *project, int quantity);                   // units conversion factor
 int      getInt(char *s, int *y);             // get integer from string
 int      getFloat(char *s, float *y);         // get float from string
 int      getDouble(char *s, double *y);       // get double from string

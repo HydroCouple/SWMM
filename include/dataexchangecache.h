@@ -22,6 +22,20 @@
 #ifndef DATAEXCHANGECACHE_H
 #define DATAEXCHANGECACHE_H
 
+#undef WINDOWS
+#ifdef _WIN32
+#define WINDOWS
+#endif
+#ifdef __WIN32__
+#define WINDOWS
+#endif
+
+
+#ifdef WINDOWS
+  #define DLLEXPORT __declspec(dllexport)
+#else
+  #define DLLEXPORT
+#endif
 
 #ifdef __cplusplus
 extern "C"
@@ -30,27 +44,27 @@ extern "C"
 
 typedef struct Project Project;
 
-void addNodeLateralInflow(Project* project, int index, double value);
-int  containsNodeLateralInflow(Project* project, int index, double* value);
-int  removeNodeLateralInflow(Project* project, int index);
+void DLLEXPORT addNodeLateralInflow(Project* project, int index, double value);
+int DLLEXPORT containsNodeLateralInflow(Project* project, int index, double* value);
+int DLLEXPORT removeNodeLateralInflow(Project* project, int index);
 
-void addNodeDepth(Project* project, int index, double value);
-int containsNodeDepth(Project* project, int index, double* value);
-int removeNodeDepth(Project* project, int index);
+void DLLEXPORT addNodeDepth(Project* project, int index, double value);
+int DLLEXPORT containsNodeDepth(Project* project, int index, double* value);
+int DLLEXPORT removeNodeDepth(Project* project, int index);
 
-void addSubcatchRain(Project* project, int index, double value);
-int containsSubcatchRain(Project* project, int index, double* value);
-int removeSubcatchRain(Project* project, int index);
+void DLLEXPORT addSubcatchRain(Project* project, int index, double value);
+int DLLEXPORT containsSubcatchRain(Project* project, int index, double* value);
+int DLLEXPORT removeSubcatchRain(Project* project, int index);
 
-void clearDataCache(Project* project);
+void DLLEXPORT clearDataCache(Project* project);
 
 //-----------------------------------------------------------------------------
 //   Coupling Functions
 //-----------------------------------------------------------------------------
 
-void applyCouplingNodeDepths(Project* project);
+void DLLEXPORT applyCouplingNodeDepths(Project* project);
 
-void applyCouplingLateralInflows(Project* project);
+void DLLEXPORT applyCouplingLateralInflows(Project* project);
 
 
 #ifdef __cplusplus

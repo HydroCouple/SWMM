@@ -61,18 +61,21 @@ unsigned int hash(char *str)
 {
     unsigned int sum1= 0, check1;
     unsigned long sum2= 0L;
-	while(  '\0' != *str  )
+
+    while(  '\0' != *str  )
     {
         sum1 += UCHAR(*str);
         str++;
         if (  255 <= sum1  ) sum1 -= 255;
         sum2 += sum1;
     }
+
     check1= sum2;
     check1 %= 255;
     check1= 255 - (sum1+check1) % 255;
     sum1= 255 - (sum1+check1) % 255;
-    return( ( ( check1 << 8 )  |  sum1  ) % HTMAXSIZE);
+
+    return((( check1 << 8 )  |  sum1  ) % HTMAXSIZE);
 }
 
 HTtable *HTcreate()

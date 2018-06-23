@@ -54,9 +54,9 @@ static const char* MonthTxt[] =
  "MAY", "JUN", "JUL", "AUG",
  "SEP", "OCT", "NOV", "DEC"};
 static const int DaysPerMonth[2][12] =      // days per month
-{{31, 28, 31, 30, 31, 30,               // normal years
+       {{31, 28, 31, 30, 31, 30,               // normal years
         31, 31, 30, 31, 30, 31},
-{31, 29, 31, 30, 31, 30,               // leap years
+        {31, 29, 31, 30, 31, 30,               // leap years
         31, 31, 30, 31, 30, 31}};
 static const int DateDelta = 693594;        // days since 01/01/00
 static const double SecsPerDay = 86400.;    // seconds per day

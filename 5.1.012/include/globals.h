@@ -89,16 +89,16 @@ struct Project
     long StepCount;                // Number of routing steps used
     long NonConvergeCount;         // Number of non-converging steps
 
-    char Msg[MAXMSG+1];            // Text of output message
-    char ErrorMsg[MAXMSG+1];       // Text of error message           //(5.1.011)
-    char Title[MAXTITLE][MAXMSG+1];// Project title
-    char TempDir[MAXFNAME+1];      // Temporary file directory
+    char *Msg; //[MAXMSG+1];            // Text of output message
+    char *ErrorMsg; //[MAXMSG+1];       // Text of error message           //(5.1.011)
+    char **Title; //[MAXTITLE][MAXMSG+1];// Project title
+    char *TempDir; //[MAXFNAME+1];      // Temporary file directory
 
     TRptFlags RptFlags;                 // Reporting options
 
-    int Nobjects[MAX_OBJ_TYPES];  // Number of each object type
-    int Nnodes[MAX_NODE_TYPES];   // Number of each node sub-type
-    int Nlinks[MAX_LINK_TYPES];   // Number of each link sub-type
+    int *Nobjects; //[MAX_OBJ_TYPES];  // Number of each object type
+    int *Nnodes; //[MAX_NODE_TYPES];   // Number of each node sub-type
+    int *Nlinks; //[MAX_LINK_TYPES];   // Number of each link sub-type
     int UnitSystem;               // Unit system
     int FlowUnits;                // Flow units
     int InfilModel;               // Infiltration method
@@ -222,11 +222,11 @@ struct Project
     int      FileDay;               // current day of month of file data
     int      FileLastDay;           // last day of current month of file data
     int      FileElapsedDays;       // number of days read from file
-    double   FileValue[4];          // current day's values of climate data
-    double   FileData[4][32];       // month's worth of daily climate data
-    char     FileLine[MAXLINE+1];   // line from climate data file
+    double   *FileValue;//[4];          // current day's values of climate data
+    double   **FileData; //[4][32];       // month's worth of daily climate data
+    char     *FileLine;//[MAXLINE+1];   // line from climate data file
 
-    int      FileFieldPos[4];       // start of data fields for file record //(5.1.007)
+    int      *FileFieldPos; //[4];       // start of data fields for file record //(5.1.007)
     int      FileDateFieldPos;      // start of date field for file record  //(5.1.007)
     int      FileWindType;          // wind speed type;                     //(5.1.007)
 
@@ -319,11 +319,11 @@ struct Project
     //-----------------------------------------------------------------------------
     //  Shared variables moved from input.c
     //-----------------------------------------------------------------------------
-    char *Tok[MAXTOKS];             // String tokens from line of input
+    char **Tok;//[MAXTOKS];             // String tokens from line of input
     int  Ntokens;                   // Number of tokens in line of input
-    int  Mobjects[MAX_OBJ_TYPES];   // Working number of objects of each type
-    int  Mnodes[MAX_NODE_TYPES];    // Working number of node objects
-    int  Mlinks[MAX_LINK_TYPES];    // Working number of link objects
+    int  *Mobjects; //[MAX_OBJ_TYPES];   // Working number of objects of each type
+    int  *Mnodes; //[MAX_NODE_TYPES];    // Working number of node objects
+    int  *Mlinks; //[MAX_LINK_TYPES];    // Working number of link objects
     int  Mevents;                   // Working number of event periods      //(5.1.011)
 
     //-----------------------------------------------------------------------------
@@ -404,7 +404,7 @@ struct Project
     double     StorageDrain;   // underdrain flow rate layer (ft/s)
     double     StorageVolume;  // volume in storage layer (ft)
 
-    double     Xold[MAX_LAYERS];  // previous moisture level in LID layers  //(5.1.008)
+    double     *Xold; //[MAX_LAYERS];  // previous moisture level in LID layers  //(5.1.008)
 
 
 
@@ -435,7 +435,7 @@ struct Project
     int    PrevLex, CurLex;
     int    Len, Pos;
     char   *S;
-    char   Token[255];
+    char   *Token; //[255];
     int    Ivar;
     double Fvalue;
 
@@ -467,7 +467,7 @@ struct Project
     INT4      NumNodes;             // number of nodes reported on
     INT4      NumLinks;             // number of links reported on
     INT4      NumPolluts;           // number of pollutants reported on
-    REAL4     SysResults[MAX_SYS_RESULTS];    // values of system output vars.
+    REAL4     *SysResults;//[MAX_SYS_RESULTS];    // values of system output vars.
 
     //-----------------------------------------------------------------------------
     //  Exportable variables (shared with report.c) moved from output.c
@@ -480,7 +480,7 @@ struct Project
     //-----------------------------------------------------------------------------
     //  Shared variables moved from project.c
     //-----------------------------------------------------------------------------
-    HTtable* Htable[MAX_OBJ_TYPES]; // Hash tables for object ID names
+    HTtable** Htable; //[MAX_OBJ_TYPES]; // Hash tables for object ID names
     char     MemPoolAllocated;      // TRUE if memory pool allocated
 
     /*
@@ -558,9 +558,9 @@ struct Project
     //  Shared variables moved from stats.c
     //-----------------------------------------------------------------------------
     TSysStats       SysStats;
-    TMaxStats       MaxMassBalErrs[MAX_STATS];
-    TMaxStats       MaxCourantCrit[MAX_STATS];
-    TMaxStats       MaxFlowTurns[MAX_STATS];
+    TMaxStats       *MaxMassBalErrs; //[MAX_STATS];
+    TMaxStats       *MaxCourantCrit; //[MAX_STATS];
+    TMaxStats       *MaxFlowTurns; //[MAX_STATS];
     double          SysOutfallFlow;
 
     //-----------------------------------------------------------------------------
@@ -591,7 +591,7 @@ struct Project
     //     extern double*         NodeOutflow;            // defined in massbal.c
 
     //Moved from statsrpt.c
-    char   FlowFmt[6];
+    char   *FlowFmt; //[6];
     double Vcf;
 
 
@@ -630,8 +630,8 @@ struct Project
     //-----------------------------------------------------------------------------
     int    Ntransects;              // total number of transects
     int    Nstations;               // number of stations in current transect
-    double  Station[MAXSTATION+1];  // x-coordinate of each station
-    double  Elev[MAXSTATION+1];     // elevation of each station
+    double  *Station; //[MAXSTATION+1];  // x-coordinate of each station
+    double  *Elev; //[MAXSTATION+1];     // elevation of each station
     double  Nleft;                  // Manning's n for left overbank
     double  Nright;                 // Manning's n for right overbank
     double  Nchannel;               // Manning's n for main channel

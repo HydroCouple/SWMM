@@ -202,7 +202,7 @@ double exfil_getLoss(Project *project, TExfil* exfil, double tStep, double depth
         {
             // --- if infil. rate not a function of depth
             if ( exfil->btmExfil->IMDmax == 0.0 )
-            {    
+            {
                 exfilRate += area * exfil->btmExfil->Ks * project->Adjust.hydconFactor; //(5.1.008)
             }
 

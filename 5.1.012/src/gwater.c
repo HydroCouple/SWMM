@@ -64,7 +64,7 @@ enum   GWstates {THETA,                // moisture content of upper GW zone
                  LOWERDEPTH};          // depth of lower saturated GW zone
 
 enum   GWvariables {
-	     gwvHGW,                       // water table height (ft)
+         gwvHGW,                       // water table height (ft)
          gwvHSW,                       // surface water height (ft)
          gwvHCB,                       // channel bottom height (ft)           //(5.1.007)
          gwvHGS,                       // ground surface height (ft)           //(5.1.007)

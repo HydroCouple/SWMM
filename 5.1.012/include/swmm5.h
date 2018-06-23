@@ -64,13 +64,8 @@ extern "C" {
 
 typedef struct Project Project;
 
-#ifdef WINDOWS
-  __declspec(dllexport) Project* __stdcall swmm_createProject();
-#else
- Project* DLLEXPORT swmm_createProject();
-#endif
-
-void DLLEXPORT swmm_deleteProject(Project* project);
+void DLLEXPORT  swmm_createProject(Project **project);
+void DLLEXPORT  swmm_deleteProject(Project* project);
 int  DLLEXPORT  swmm_run(Project *project, char* f1, char* f2, char* f3);
 int  DLLEXPORT  swmm_open(Project *project, char* f1, char* f2, char* f3);
 int  DLLEXPORT  swmm_start(Project *project, int saveFlag);

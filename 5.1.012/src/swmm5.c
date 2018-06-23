@@ -66,12 +66,12 @@
 //**********************************************************
 
 #ifdef SWMM_LIBRARY
-  #define DLL     /* Compile as a Windows DLL */
-  //#define SOL     /* Compile as a shared object library */
+#define DLL     /* Compile as a Windows DLL */
+//#define SOL     /* Compile as a shared object library */
 #else
-  #ifndef SWMM_TEST
-    #define CLE     /* Compile as a command line executable */
-  #endif
+#ifndef SWMM_TEST
+#define CLE     /* Compile as a command line executable */
+#endif
 #endif
 
 // --- define WINDOWS
@@ -150,6 +150,7 @@ const double Ucf[10][2] =
  {2.203e-6,  1.0e-6    },         // MASS (lb, kg --> mg)
  {43560.0,   3048.0    }          // GWFLOW (cfs/ac, cms/ha --> ft/sec)
 };
+
 const double Qcf[6] =                  // Flow Conversion Factors:
 { 1.0,     448.831, 0.64632,     // cfs, gpm, mgd --> cfs
                                        0.02832, 28.317,  2.4466 };    // cms, lps, mld --> cfs
@@ -244,15 +245,14 @@ int  main(int argc, char *argv[])
 #endif
 
 
-Project* swmm_createProject()
+void DLLEXPORT swmm_createProject(Project **project)
 {
-  Project *project = (Project*) malloc(sizeof(Project));
-  project->IsOpenFlag = FALSE;
-  project->IsStartedFlag = FALSE;
-  project->SaveResultsFlag = TRUE;
-  project->ErrorCode = 0;
-
-  return project;
+  (*project) = (Project*) malloc(sizeof(Project));
+  (*project)->IsOpenFlag = FALSE;
+  (*project)->IsStartedFlag = FALSE;
+  (*project)->SaveResultsFlag = TRUE;
+  (*project)->ErrorCode = 0;
+  (*project)->ErrorMsg = (char*)malloc((MAXMSG+1) * sizeof(char));
 }
 
 void  DLLEXPORT swmm_deleteProject(Project *project)

@@ -6,7 +6,9 @@ The EPA Stormwater Management Model refactored to enable multiple instances in t
 ---------------------------------------
 ``` C++
 
- Project *project = swmm_createProject();
+ Project *project = nullptr;
+ 
+ swmm_createProject(&project);
 
  std::string inpuFileStr = "./../../examples/test1/test1.inp";
  char *inputFile = new char[inpuFileStr.size() + 1];

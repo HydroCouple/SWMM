@@ -87,7 +87,7 @@ int RunSwmmDll(char* inpFile, char* rptFile, char* outFile)
 
   // --- open a SWMM project
 
-  project = swmm_createProject();
+  swmm_createProject(&project);
 
   swmm_open(project, inpFile, rptFile, outFile);
 

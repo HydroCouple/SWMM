@@ -49,8 +49,8 @@ int DLLEXPORT containsNodeLateralInflow(Project* project, int index, double* val
 int DLLEXPORT removeNodeLateralInflow(Project* project, int index);
 
 void DLLEXPORT addNodeDepth(Project* project, int index, double value);
-int DLLEXPORT containsNodeDepth(Project* project, int index, double* value);
-int DLLEXPORT removeNodeDepth(Project* project, int index);
+int DLLEXPORT  containsNodeDepth(Project* project, int index, double* value);
+int DLLEXPORT  removeNodeDepth(Project* project, int index);
 
 void DLLEXPORT addSubcatchRain(Project* project, int index, double value);
 int DLLEXPORT containsSubcatchRain(Project* project, int index, double* value);

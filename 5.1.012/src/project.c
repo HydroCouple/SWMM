@@ -300,49 +300,6 @@ void project_close(Project *project)
   deleteObjects(project);
   deleteHashTables(project);
   clearDataCache(project);
-
-
-  //Previously on stack
-  free(project->Msg);
-  free(project->ErrorMsg);
-
-
-  for(i = 0; i < MAXTITLE; i++)
-  {
-    free(project->Title[i]);
-  }
-
-  free(project->Title);
-
-  free(project->TempDir);
-  free(project->Nobjects);
-  free(project->Nnodes);
-  free(project->Nlinks);
-  free(project->FileValue);
-
-  for(i = 0; i < 4; i++)
-  {
-    free(project->FileData[i]);
-  }
-
-  free(project->FileData);
-
-  free(project->FileLine);
-  free(project->FileFieldPos);
-  free(project->Tok);
-  free(project->Mobjects);
-  free(project->Mnodes);
-  free(project->Mlinks);
-  free(project->Xold);
-  free(project->Token);
-  free(project->SysResults);
-  free(project->Htable);
-  free(project->MaxMassBalErrs);
-  free(project->MaxCourantCrit);
-  free(project->MaxFlowTurns);
-  free(project->FlowFmt);
-  free(project->Station);
-  free(project->Elev);
 }
 
 //=============================================================================
@@ -820,33 +777,6 @@ void initPointers(Project *project)
   project->HortInfil = NULL;
   project->GAInfil = NULL;
   project->CNInfil = NULL;
-
-  //removed from stack
-  project->Msg = NULL;
-//  project->ErrorMsg = NULL;
-  project->Title = NULL;
-  project->TempDir = NULL;
-  project->Nobjects = NULL;
-  project->Nnodes = NULL;
-  project->Nlinks = NULL;
-  project->FileValue = NULL;
-  project->FileData = NULL;
-  project->FileLine = NULL;
-  project->FileFieldPos = NULL;
-  project->Tok = NULL;
-  project->Mobjects = NULL;
-  project->Mnodes = NULL;
-  project->Mlinks = NULL;
-  project->Xold = NULL;
-  project->Token = NULL;
-  project->SysResults = NULL;
-  project->Htable = NULL;
-  project->MaxMassBalErrs = NULL;
-  project->MaxCourantCrit = NULL;
-  project->MaxFlowTurns = NULL;
-  project->FlowFmt = NULL;
-  project->Station = NULL;
-  project->Elev = NULL;
 }
 
 //=============================================================================
@@ -859,45 +789,6 @@ void setDefaults(Project *project)
 //
 {
   int i, j;
-
-  //Previously on stack
-  project->Msg = (char*)malloc((MAXMSG+1) * sizeof(char));
-//  project->ErrorMsg = (char*)malloc((MAXMSG+1) * sizeof(char));
-  project->Title = (char**)malloc(MAXTITLE * sizeof(char*));
-
-  for(i = 0; i < MAXTITLE; i++)
-  {
-    project->Title[i] = (char*)malloc((MAXMSG+1) * sizeof(char));
-  }
-
-  project->TempDir = (char*)malloc((MAXFNAME+1) * sizeof(char));
-  project->Nobjects = (int*)malloc(MAX_OBJ_TYPES * sizeof(int));
-  project->Nnodes = (int*)malloc(MAX_NODE_TYPES * sizeof(int));
-  project->Nlinks = (int*)malloc(MAX_LINK_TYPES * sizeof(int));
-  project->FileValue = (double*)malloc(4 * sizeof(double));
-  project->FileData = (double**)malloc(4 * sizeof(double*));
-
-  for(i = 0; i < 4; i++)
-  {
-    project->FileData[i] = (double*)malloc(32 * sizeof(double));
-  }
-
-  project->FileLine = (char*)malloc((MAXLINE+1) * sizeof(char));
-  project->FileFieldPos = (int*)malloc(4 * sizeof(int));
-  project->Tok = (char**)malloc(MAXTOKS * sizeof(char*));
-  project->Mobjects = (int*)malloc(MAX_OBJ_TYPES * sizeof(int));
-  project->Mnodes = (int*)malloc(MAX_NODE_TYPES * sizeof(int));
-  project->Mlinks = (int*)malloc(MAX_LINK_TYPES * sizeof(int));
-  project->Xold = (double*)malloc(MAX_LAYERS * sizeof(double));
-  project->Token = (char*)malloc(255 * sizeof(char));
-  project->SysResults = (REAL4*)malloc(MAX_SYS_RESULTS * sizeof(REAL4));
-  project->Htable = (HTtable**)malloc(MAX_OBJ_TYPES * sizeof(HTtable*));
-  project->MaxMassBalErrs = (TMaxStats*)malloc(MAX_STATS * sizeof(TMaxStats));
-  project->MaxCourantCrit = (TMaxStats*)malloc(MAX_STATS * sizeof(TMaxStats));
-  project->MaxFlowTurns = (TMaxStats*)malloc(MAX_STATS * sizeof(TMaxStats));
-  project->FlowFmt = (char*)malloc(6 * sizeof(char));
-  project->Station = (double*)malloc((MAXSTATION+1) * sizeof(double));
-  project->Elev = (double*)malloc((MAXSTATION+1) * sizeof(double));
 
   // Project title & temp. file path
   for (i = 0; i < MAXTITLE; i++)

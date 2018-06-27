@@ -252,7 +252,6 @@ void DLLEXPORT swmm_createProject(Project **project)
   (*project)->IsStartedFlag = FALSE;
   (*project)->SaveResultsFlag = TRUE;
   (*project)->ErrorCode = 0;
-  (*project)->ErrorMsg = (char*)malloc((MAXMSG+1) * sizeof(char));
 }
 
 void  DLLEXPORT swmm_deleteProject(Project *project)

@@ -1908,7 +1908,7 @@ double orifice_getInflow(Project *project, int j)
     }
 
     // --- find flow through the orifice
-    q = dir * orifice_getFlow(project, -j, k, head, f, project->Link[j].hasFlapGate);
+    q = dir * orifice_getFlow(project, j, k, head, f, project->Link[j].hasFlapGate);
 
     // --- apply Villemonte eqn. to correct for submergence
     if ( f < 1.0 && h2 > hcrest )

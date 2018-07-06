@@ -13,7 +13,6 @@ QT -= gui
 DEFINES += SWMM_LIBRARY
 DEFINES += USE_OPENMP
 DEFINES += USE_MPI
-#DEFINES += SWMM_TEST
 
 CONFIG += c++11
 CONFIG += debug_and_release
@@ -179,34 +178,21 @@ macx{
 
 linux{
 
-INCLUDEPATH += /usr/include
-
-    contains(DEFINES,UTAH_CHPC){
-
-         INCLUDEPATH += /uufs/chpc.utah.edu/sys/installdir/hdf5/1.8.17-c7/include \
-                        /uufs/chpc.utah.edu/sys/installdir/netcdf-c/4.3.3.1/include \
-                        /uufs/chpc.utah.edu/sys/installdir/netcdf-cxx/4.3.0-c7/include \
-                        ../hypre/build/include
-
-
-         LIBS += -L/uufs/chpc.utah.edu/sys/installdir/hdf5/1.8.17-c7/lib -lhdf5 \
-                 -L/uufs/chpc.utah.edu/sys/installdir/netcdf-cxx/4.3.0-c7/lib -lnetcdf_c++4 \
-                 -L../hypre/build/lib -lHYPRE
-
-         message("Compiling on CHPC")
-     }
+    INCLUDEPATH += /usr/include
 
     contains(DEFINES,USE_OPENMP){
 
-    QMAKE_CFLAGS += -fopenmp
-    QMAKE_LFLAGS += -fopenmp
-    QMAKE_CXXFLAGS += -fopenmp
+        QMAKE_CFLAGS += -fopenmp
+        QMAKE_LFLAGS += -fopenmp
+        QMAKE_CXXFLAGS += -fopenmp
 
-    LIBS += -L/usr/lib/x86_64-linux-gnu -lgomp
+        LIBS += -L/usr/lib/x86_64-linux-gnu -lgomp
 
-      message("OpenMP enabled")
+        message("OpenMP enabled")
+
      } else {
-      message("OpenMP disabled")
+
+        message("OpenMP disabled")
      }
 }
 

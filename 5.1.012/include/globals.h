@@ -6,7 +6,7 @@
  * \license
  * This file and its associated files, and libraries are free software.
  * You can redistribute it and/or modify it under the terms of the
- * Lesser GNU General Public License as published by the Free Software Foundation;
+ * Lesser GNU Lesser General Public License as published by the Free Software Foundation;
  * either version 3 of the License, or (at your option) any later version.
  * This file and its associated files is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.(see <http://www.gnu.org/licenses/> for details)
@@ -60,11 +60,11 @@
 #include <time.h>
 
 // Definition of 4-byte integer, 4-byte real and 8-byte real types
-#define INT4  int
-#define REAL4 float
-#define REAL8 double
+//#define INT4  int
+//#define REAL4 float
+//#define REAL8 double
 #define MAX_STATS 5
-#define MAXSTATION 1500                // max. number of stations in a transect
+#define MAXSTATION 1500          // max. number of stations in a transect
 
 //moved from lid.c
 typedef struct LidGroup* TLidGroup;
@@ -456,25 +456,25 @@ struct Project
     //-----------------------------------------------------------------------------
     //  Shared variables moved from output.c
     //-----------------------------------------------------------------------------
-    INT4      IDStartPos;           // starting file position of ID names
-    INT4      InputStartPos;        // starting file position of input data
-    INT4      OutputStartPos;       // starting file position of output data
-    INT4      BytesPerPeriod;       // bytes saved per simulation time period
-    INT4      NsubcatchResults;     // number of subcatchment output variables
-    INT4      NnodeResults;         // number of node output variables
-    INT4      NlinkResults;         // number of link output variables
-    INT4      NumSubcatch;          // number of subcatchments reported on
-    INT4      NumNodes;             // number of nodes reported on
-    INT4      NumLinks;             // number of links reported on
-    INT4      NumPolluts;           // number of pollutants reported on
-    REAL4     SysResults[MAX_SYS_RESULTS];    // values of system output vars.
+    int      IDStartPos;           // starting file position of ID names
+    int      InputStartPos;        // starting file position of input data
+    int      OutputStartPos;       // starting file position of output data
+    int      BytesPerPeriod;       // bytes saved per simulation time period
+    int      NsubcatchResults;     // number of subcatchment output variables
+    int      NnodeResults;         // number of node output variables
+    int      NlinkResults;         // number of link output variables
+    int      NumSubcatch;          // number of subcatchments reported on
+    int      NumNodes;             // number of nodes reported on
+    int      NumLinks;             // number of links reported on
+    int      NumPolluts;           // number of pollutants reported on
+    float     SysResults[MAX_SYS_RESULTS];    // values of system output vars.
 
     //-----------------------------------------------------------------------------
     //  Exportable variables (shared with report.c) moved from output.c
     //-----------------------------------------------------------------------------
-    REAL4*           SubcatchResults;
-    REAL4*           NodeResults;
-    REAL4*           LinkResults;
+    float*           SubcatchResults;
+    float*           NodeResults;
+    float*           LinkResults;
 
 
     //-----------------------------------------------------------------------------
@@ -515,7 +515,7 @@ struct Project
     int        RdiiStep;            // RDII time step (sec)
     int        NumRdiiNodes;        // number of nodes w/ RDII data
     int*       RdiiNodeIndex;       // indexes of nodes w/ RDII data
-    REAL4*     RdiiNodeFlow;        // inflows for nodes with RDII          //(5.1.003)
+    float*     RdiiNodeFlow;        // inflows for nodes with RDII          //(5.1.003)
     int        RdiiFlowUnits;       // RDII flow units code
     DateTime   RdiiStartDate;       // start date of RDII inflow period
     DateTime   RdiiEndDate;         // end date of RDII inflow period

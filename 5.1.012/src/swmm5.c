@@ -7,7 +7,7 @@
  * \license
  * This file and its associated files, and libraries are free software.
  * You can redistribute it and/or modify it under the terms of the
- * Lesser GNU General Public License as published by the Free Software Foundation;
+ * Lesser GNU Lesser General Public License as published by the Free Software Foundation;
  * either version 3 of the License, or (at your option) any later version.
  * This file and its associated files is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.(see <http://www.gnu.org/licenses/> for details)
@@ -414,7 +414,7 @@ int DLLEXPORT swmm_start(Project *project, int saveResults)
     // --- initialize runoff, routing & reporting time (in milliseconds)
     project->NewRunoffTime = 0.0;
     project->NewRoutingTime = 0.0;
-    project->ReportTime =   (double)(1000 * project->ReportStep);
+    project->ReportTime =  (double)(1000 * project->ReportStep);
     project->StepCount = 0;
     project->NonConvergeCount = 0;
     project->IsStartedFlag = TRUE;
@@ -507,7 +507,9 @@ int DLLEXPORT swmm_step(Project *project, double* elapsedTime)                  
     // --- save results at next reporting time
     if ( project->NewRoutingTime >= project->ReportTime )
     {
-      if ( project->SaveResultsFlag ) output_saveResults(project, project->ReportTime);
+      if ( project->SaveResultsFlag )
+        output_saveResults(project, project->ReportTime);
+
       project->ReportTime = project->ReportTime + (double)(1000 * project->ReportStep);
     }
 
@@ -516,9 +518,10 @@ int DLLEXPORT swmm_step(Project *project, double* elapsedTime)                  
     {
       project->ElapsedTime = project->NewRoutingTime / MSECperDAY;                         //(5.1.011)
     }
-
     // --- otherwise end the simulation
-    else project->ElapsedTime = 0.0;                                                //(5.1.011)
+    else
+      project->ElapsedTime = 0.0;                                                //(5.1.011)
+
     *elapsedTime = project->ElapsedTime;                                            //(5.1.011)
   }
 

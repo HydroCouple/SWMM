@@ -7,7 +7,7 @@
  * \license
  * This file and its associated files, and libraries are free software.
  * You can redistribute it and/or modify it under the terms of the
- * Lesser GNU General Public License as published by the Free Software Foundation;
+ * Lesser GNU Lesser General Public License as published by the Free Software Foundation;
  * either version 3 of the License, or (at your option) any later version.
  * This file and its associated files is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.(see <http://www.gnu.org/licenses/> for details)
@@ -277,11 +277,14 @@ void project_validate(Project *project)
   // --- validate dynamic wave options
   if ( project->RouteModel == DW ) dynwave_validate(project);                                //(5.1.008)
 
+#ifdef  USE_OPENMP
 #pragma omp parallel                                                           //(5.1.008)
   {
     if ( project->NumThreads == 0 ) project->NumThreads = omp_get_num_threads();                 //(5.1.008)
     else project->NumThreads = MIN(project->NumThreads, omp_get_num_threads());                  //(5.1.008)
   }
+#endif
+
   if ( project->Nobjects[LINK] < 4 * project->NumThreads ) project->NumThreads = 1;                     //(5.1.008)
 
 }
@@ -295,8 +298,6 @@ void project_close(Project *project)
 //  Purpose: closes a SWMM project.
 //
 {
-  int i;
-
   deleteObjects(project);
   deleteHashTables(project);
   clearDataCache(project);

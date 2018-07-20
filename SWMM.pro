@@ -1,7 +1,7 @@
 #Author Caleb Amoa Buahin
 #Email caleb.buahin@gmail.com
 #Date 2018
-#License GNU General Public License (see <http: //www.gnu.org/licenses/> for details).
+#License GNU Lesser General Public License (see <http: //www.gnu.org/licenses/> for details).
 #EPA SWMM Model
 
 TEMPLATE = lib
@@ -13,9 +13,13 @@ QT -= gui
 DEFINES += SWMM_LIBRARY
 DEFINES += USE_OPENMP
 DEFINES += USE_MPI
+#DEFINES += SWMM_TEST
+#DEFINES += QT_NO_VERSION_TAGGING
+
 
 CONFIG += c++11
 CONFIG += debug_and_release
+CONFIG += optimize_full
 
 contains(DEFINES,SWMM_LIBRARY){
   TEMPLATE = lib
@@ -26,10 +30,6 @@ contains(DEFINES,SWMM_LIBRARY){
   message("Compiling as application")
 }
 
-*msvc* { # visual studio spec filter
-      QMAKE_CXXFLAGS += /MP /O2
-  }
-
 
 PRECOMPILED_HEADER = ./include/stdafx.h
 
@@ -38,7 +38,7 @@ INCLUDEPATH += ./include \
                ./test/include
 
 HEADERS +=./include/stdafx.h \
-          ./include/dataexchangecache.h \ 
+          ./include/dataexchangecache.h \
           ./test/include/swmmtestclass.h
 
 SOURCES +=./src/stdafx.cpp \
@@ -186,7 +186,7 @@ linux{
         QMAKE_LFLAGS += -fopenmp
         QMAKE_CXXFLAGS += -fopenmp
 
-        LIBS += -L/usr/lib/x86_64-linux-gnu -lgomp
+#        LIBS += -L/usr/lib/x86_64-linux-gnu -lgomp
 
         message("OpenMP enabled")
 
@@ -236,9 +236,26 @@ win32{
               message("MPI disabled")
             }
     }
+
+    QMAKE_CXXFLAGS += /MP
 }
 
 CONFIG(debug, debug|release) {
+
+    win32 {
+       QMAKE_CXXFLAGS_DEBUG = $$QMAKE_CXXFLAGS /MDd  /O2
+    }
+
+    macx {
+     QMAKE_CFLAGS_DEBUG = $$QMAKE_CFLAGS -g -O3
+     QMAKE_CXXFLAGS_DEBUG = $$QMAKE_CXXFLAGS -g -O3
+    }
+
+    linux {
+     QMAKE_CFLAGS_DEBUG = $$QMAKE_CFLAGS -g -O3
+     QMAKE_CXXFLAGS_DEBUG = $$QMAKE_CXXFLAGS -g -O3
+    }
+
 
    DESTDIR = ./build/debug
    OBJECTS_DIR = $$DESTDIR/.obj
@@ -248,6 +265,11 @@ CONFIG(debug, debug|release) {
 }
 
 CONFIG(release, debug|release) {
+
+
+   win32 {
+    QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CXXFLAGS /MD
+   }
 
     RELEASE_EXTRAS = ./build/release 
     OBJECTS_DIR = $$RELEASE_EXTRAS/.obj

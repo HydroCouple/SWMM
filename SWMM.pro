@@ -238,12 +238,13 @@ win32{
     }
 
     QMAKE_CXXFLAGS += /MP
+    QMAKE_LFLAGS += /MP /incremental /debug:fastlink
 }
 
 CONFIG(debug, debug|release) {
 
     win32 {
-       QMAKE_CXXFLAGS_DEBUG = $$QMAKE_CXXFLAGS /MDd  /O2
+       QMAKE_CXXFLAGS+= /MDd /O2
     }
 
     macx {
@@ -268,7 +269,7 @@ CONFIG(release, debug|release) {
 
 
    win32 {
-    QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CXXFLAGS /MD
+       QMAKE_CXXFLAGS+= /MD /O2
    }
 
     RELEASE_EXTRAS = ./build/release 

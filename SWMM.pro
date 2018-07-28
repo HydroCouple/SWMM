@@ -164,10 +164,6 @@ macx{
         QMAKE_CXX = /usr/local/bin/mpicxx
         QMAKE_LINK = /usr/local/bin/mpicxx
 
-        QMAKE_CFLAGS += $$system(mpicc --showme:compile)
-        QMAKE_CXXFLAGS += $$system(mpic++ --showme:compile)
-        QMAKE_LFLAGS += $$system(mpic++ --showme:link)
-
         LIBS += -L/usr/local/lib/ -lmpi
 
       message("MPI enabled")
@@ -186,8 +182,6 @@ linux{
         QMAKE_LFLAGS += -fopenmp
         QMAKE_CXXFLAGS += -fopenmp
 
-#        LIBS += -L/usr/lib/x86_64-linux-gnu -lgomp
-
         message("OpenMP enabled")
 
      } else {
@@ -202,40 +196,37 @@ win32{
 
         QMAKE_CFLAGS += /openmp
         QMAKE_CXXFLAGS += /openmp
-        QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CXXFLAGS /MD
-        QMAKE_CXXFLAGS_DEBUG = $$QMAKE_CXXFLAGS /MDd
+
         message("OpenMP enabled")
+
      } else {
 
-      message("OpenMP disabled")
+        message("OpenMP disabled")
+
      }
 
-    #Windows vspkg package manager installation path
-    VSPKGDIR = C:/vcpkg/installed/x64-windows
+    #Windows vcpkg package manager installation path
+    #VCPKGDIR = C:/vcpkg/installed/x64-windows
 
-    INCLUDEPATH += $${VSPKGDIR}/include \
-                   $${VSPKGDIR}/include/gdal
+    INCLUDEPATH += $${VCPKGDIR}/include \
+                   $${VCPKGDIR}/include/gdal
 
-    message ($$(VSPKGDIR))
+    message ($$(VCPKGDIR))
 
-    CONFIG(debug, debug|release) {
 
-            contains(DEFINES,USE_MPI){
-               LIBS += -L$${VSPKGDIR}/debug/lib -lmsmpi
-               message("MPI enabled")
-            } else {
-              message("MPI disabled")
-            }
+    contains(DEFINES,USE_MPI){
+       message("MPI enabled")
 
-        } else {
+        CONFIG(debug, debug|release) {
+            LIBS += -L$${VCPKGDIR}/debug/lib -lmsmpi
+          } else {
+            LIBS += -L$${VCPKGDIR}/lib -lmsmpi
+        }
 
-            contains(DEFINES,USE_MPI){
-               LIBS += -L$${VSPKGDIR}/lib -lmsmpi
-               message("MPI enabled")
-            } else {
-              message("MPI disabled")
-            }
+    } else {
+      message("MPI disabled")
     }
+
 
     QMAKE_CXXFLAGS += /MP
     QMAKE_LFLAGS += /MP /incremental /debug:fastlink
@@ -244,17 +235,15 @@ win32{
 CONFIG(debug, debug|release) {
 
     win32 {
-       QMAKE_CXXFLAGS+= /MDd /O2
+       QMAKE_CXXFLAGS += /MDd /O2
     }
 
     macx {
-     QMAKE_CFLAGS_DEBUG = $$QMAKE_CFLAGS -g -O3
-     QMAKE_CXXFLAGS_DEBUG = $$QMAKE_CXXFLAGS -g -O3
+       QMAKE_CXXFLAGS += -O3
     }
 
     linux {
-     QMAKE_CFLAGS_DEBUG = $$QMAKE_CFLAGS -g -O3
-     QMAKE_CXXFLAGS_DEBUG = $$QMAKE_CXXFLAGS -g -O3
+       QMAKE_CXXFLAGS += -O3
     }
 
 
@@ -269,7 +258,7 @@ CONFIG(release, debug|release) {
 
 
    win32 {
-       QMAKE_CXXFLAGS+= /MD /O2
+       QMAKE_CXXFLAGS+= /MD
    }
 
     RELEASE_EXTRAS = ./build/release 

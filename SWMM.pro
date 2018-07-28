@@ -46,10 +46,6 @@ SOURCES +=./src/stdafx.cpp \
           ./test/src/swmmtestdriver.cpp \
           ./test/src/swmmtestclass.cpp
 
-win32{
-  INCLUDEPATH += $$(MSMPI_INC)/
-}
-
 equals(VERSION,5.1.012){
 
     message("SWMM Version: " $$VERSION)
@@ -206,7 +202,7 @@ win32{
      }
 
     #Windows vcpkg package manager installation path
-    #VCPKGDIR = C:/vcpkg/installed/x64-windows
+    VCPKGDIR = C:/vcpkg/installed/x64-windows
 
     INCLUDEPATH += $${VCPKGDIR}/include \
                    $${VCPKGDIR}/include/gdal
@@ -229,7 +225,7 @@ win32{
 
 
     QMAKE_CXXFLAGS += /MP
-    QMAKE_LFLAGS += /MP /incremental /debug:fastlink
+    QMAKE_LFLAGS += /incremental /debug:fastlink
 }
 
 CONFIG(debug, debug|release) {

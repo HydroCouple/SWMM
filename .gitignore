@@ -57,3 +57,4 @@ CMakeLists.txt.user*
 *.pch
 *.rc
 *.rc
+*.rc

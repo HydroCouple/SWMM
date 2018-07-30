@@ -178,7 +178,7 @@ void applyCouplingNodeDepths(Project* project)
     TNode *node = &project->Node[j];
     node->depthSetExternally = 0;
 
-    if (containsNodeDepth(0, j, &value))
+    if (containsNodeDepth(project, j, &value))
     {
 
       node->oldDepth = value;
@@ -213,7 +213,7 @@ void applyCouplingLateralInflows(Project* project)
   {
     double value = 0;
 
-    if(containsNodeLateralInflow(0, j, &value))
+    if(containsNodeLateralInflow(project, j, &value))
     {
       TNode* node = &project->Node[j];
       node->newLatFlow += value;

@@ -45,20 +45,23 @@ void addNodeLateralInflow(Project* project, int index, double value)
 
 int containsNodeLateralInflow(Project* project, int index, double* const  value)
 {
-   unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeLateralInflows.find(project);
+    if(NodeLateralInflows.size())
+    {
+        unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeLateralInflows.find(project);
 
-   if (it != NodeLateralInflows.end())
-   {
-      unordered_map<int, double > foundProject = (*it).second;
+        if (it != NodeLateralInflows.end())
+        {
+            unordered_map<int, double > foundProject = (*it).second;
 
-      unordered_map<int, double > ::iterator it1 = foundProject.find(index);
+            unordered_map<int, double > ::iterator it1 = foundProject.find(index);
 
-      if (it1 != foundProject.end())
-      {
-         *value = (*it1).second;
-         return 1;
-      }
-   }
+            if (it1 != foundProject.end())
+            {
+                *value = (*it1).second;
+                return 1;
+            }
+        }
+    }
 
    return 0;
 }
@@ -85,22 +88,25 @@ void addNodeDepth(Project* project, int index, double value)
 
 int containsNodeDepth(Project* project, int index, double* const value)
 {
-   unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeDepths.find(project);
+    if(NodeDepths.size())
+    {
+        unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeDepths.find(project);
 
-   if (it != NodeDepths.end())
-   {
-      unordered_map<int, double > foundProject = (*it).second;
+        if (it != NodeDepths.end())
+        {
+            unordered_map<int, double > foundProject = (*it).second;
 
-      unordered_map<int, double > ::iterator it1 = foundProject.find(index);
+            unordered_map<int, double > ::iterator it1 = foundProject.find(index);
 
-      if (it1 != foundProject.end())
-      {
-         *value = (*it1).second;
-         return 1;
-      }
-   }
+            if (it1 != foundProject.end())
+            {
+                *value = (*it1).second;
+                return 1;
+            }
+        }
+    }
 
-   return 0;
+    return 0;
 }
 
 int removeNodeDepth(Project* project, int index)
@@ -158,9 +164,14 @@ int removeSubcatchRain(Project* project, int index)
 
 void clearDataCache(Project *project)
 {
-   NodeLateralInflows.erase(project);
-   NodeDepths.erase(project);
-   SubcatchRainfall.erase(project);
+#ifdef USE_OPENMP
+#pragma omp critical (SWMM5)
+#endif
+    {
+        NodeLateralInflows.erase(project);
+        NodeDepths.erase(project);
+        SubcatchRainfall.erase(project);
+    }
 }
 
 /*!

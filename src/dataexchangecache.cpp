@@ -40,127 +40,158 @@ typedef struct OpenMIDataCache OpenMIDataCache;
 //node lateral inflow
 void addNodeLateralInflow(Project* project, int index, double value)
 {
-   NodeLateralInflows[project][index] = value;
+  NodeLateralInflows[project][index] = value;
 }
 
 int containsNodeLateralInflow(Project* project, int index, double* const  value)
 {
-   unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeLateralInflows.find(project);
+  unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeLateralInflows.find(project);
 
-   if (it != NodeLateralInflows.end())
-   {
-      unordered_map<int, double > foundProject = (*it).second;
+  if (it != NodeLateralInflows.end())
+  {
+    unordered_map<int, double > foundProject = (*it).second;
 
-      unordered_map<int, double > ::iterator it1 = foundProject.find(index);
+    unordered_map<int, double > ::iterator it1 = foundProject.find(index);
 
-      if (it1 != foundProject.end())
-      {
-         *value = (*it1).second;
-         return 1;
-      }
-   }
+    if (it1 != foundProject.end())
+    {
+      *value = (*it1).second;
+      return 1;
+    }
+  }
 
-   return 0;
+  return 0;
 }
 
 //node lateral inflow
 int removeNodeLateralInflow(Project* project, int index)
 {
-   unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeLateralInflows.find(project);
+  unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeLateralInflows.find(project);
 
-   if (it != NodeLateralInflows.end())
-   {
-      unordered_map<int, double > foundProject = (*it).second;
-      return foundProject.erase(index);
-   }
+  if (it != NodeLateralInflows.end())
+  {
+    unordered_map<int, double > foundProject = (*it).second;
+    return foundProject.erase(index);
+  }
 
-   return 0;
+  return 0;
 }
 
 //Node Depths
 void addNodeDepth(Project* project, int index, double value)
 {
-   NodeDepths[project][index] = value;
+  NodeDepths[project][index] = value;
 }
 
 int containsNodeDepth(Project* project, int index, double* const value)
 {
-   unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeDepths.find(project);
+  int retVal = 0;
 
-   if (it != NodeDepths.end())
-   {
-      unordered_map<int, double > foundProject = (*it).second;
+  if(NodeDepths.size())
+  {
+#ifdef USE_OPENMP
+#pragma omp critical (SWMM5)
+#endif
+    {
+      unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeDepths.find(project);
 
-      unordered_map<int, double > ::iterator it1 = foundProject.find(index);
-
-      if (it1 != foundProject.end())
+      if (it != NodeDepths.end())
       {
-         *value = (*it1).second;
-         return 1;
-      }
-   }
+        unordered_map<int, double > foundProject = (*it).second;
 
-   return 0;
+        unordered_map<int, double > ::iterator it1 = foundProject.find(index);
+
+        if (it1 != foundProject.end())
+        {
+          *value = (*it1).second;
+          retVal = 1;
+        }
+      }
+    }
+  }
+
+  return retVal;
 }
 
 int removeNodeDepth(Project* project, int index)
 {
-   unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeDepths.find(project);
+  unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeDepths.find(project);
 
-   if (it != NodeDepths.end())
-   {
-      unordered_map<int, double > foundProject = (*it).second;
-      return foundProject.erase(index);
-   }
+  if (it != NodeDepths.end())
+  {
+    unordered_map<int, double > foundProject = (*it).second;
+    return foundProject.erase(index);
+  }
 
-   return 0;
+  return 0;
 }
 
 //SubcatchRainfall
 void addSubcatchRain(Project* project, int index, double value)
 {
-   SubcatchRainfall[project][index] = value;
+  SubcatchRainfall[project][index] = value;
 }
 
 int containsSubcatchRain(Project* project, int index, double* const value)
 {
+  int returnVal = 0;
 
-   unordered_map<Project*, unordered_map<int, double> >::iterator it = SubcatchRainfall.find(project);
+  if(SubcatchRainfall.size())
+  {
+#ifdef USE_OPENMP
+#pragma omp critical (SWMM5)
+#endif
+    {
+      unordered_map<Project*, unordered_map<int, double> >::iterator it = SubcatchRainfall.find(project);
 
-   if (it != SubcatchRainfall.end())
-   {
-      unordered_map<int, double > foundProject = (*it).second;
-
-      unordered_map<int, double > ::iterator it1 = foundProject.find(index);
-
-      if (it1 != foundProject.end())
+      if (it != SubcatchRainfall.end())
       {
-         *value = (*it1).second;
-         return 1;
-      }
-   }
+        unordered_map<int, double > foundProject = (*it).second;
 
-   return 0;
+        unordered_map<int, double > ::iterator it1 = foundProject.find(index);
+
+        if (it1 != foundProject.end())
+        {
+          *value = (*it1).second;
+          returnVal = 1;
+        }
+      }
+    }
+  }
+
+  return returnVal;
 }
 
 int removeSubcatchRain(Project* project, int index)
 {
-   unordered_map<Project*, unordered_map<int, double> >::iterator it = SubcatchRainfall.find(project);
+  int removed = 0;
 
-   if (it != SubcatchRainfall.end())
-   {
+#ifdef USE_OPENMP
+#pragma omp critical (SWMM5)
+#endif
+  {
+    unordered_map<Project*, unordered_map<int, double> >::iterator it = SubcatchRainfall.find(project);
+
+    if (it != SubcatchRainfall.end())
+    {
       unordered_map<int, double > foundProject = (*it).second;
-      return foundProject.erase(index);
-   }
+      removed = foundProject.erase(index);
+    }
+  }
 
-   return 0;
+  return removed;
 }
 
 void clearDataCache(Project *project)
 {
-   NodeLateralInflows.erase(project);
-   NodeDepths.erase(project);
-   SubcatchRainfall.erase(project);
+#ifdef USE_OPENMP
+#pragma omp critical (SWMM5)
+#endif
+  {
+    NodeLateralInflows.erase(project);
+    NodeDepths.erase(project);
+    SubcatchRainfall.erase(project);
+  }
 }
 
 /*!
@@ -169,31 +200,37 @@ void clearDataCache(Project *project)
  */
 void applyCouplingNodeDepths(Project* project)
 {
-  int j;
-  int max = project->Nobjects[NODE];
-
-  for (j = 0; j < max; j++)
+#ifdef USE_OPENMP
+#pragma omp critical (SWMM5)
+#endif
   {
-    double value = 0;
-    TNode *node = &project->Node[j];
-    node->depthSetExternally = 0;
 
-    if (containsNodeDepth(project, j, &value))
+    int j;
+    int max = project->Nobjects[NODE];
+
+    for (j = 0; j < max; j++)
     {
+      double value = 0;
+      TNode *node = &project->Node[j];
+      node->depthSetExternally = 0;
 
-      node->oldDepth = value;
-      node->newDepth = value;
-      node->depthSetExternally = 1;
-
-      if(value > node->fullDepth && node->pondedArea > 0)
+      if (containsNodeDepth(project, j, &value))
       {
-        if(value <= node->fullDepth)
+
+        node->oldDepth = value;
+        node->newDepth = value;
+        node->depthSetExternally = 1;
+
+        if(value > node->fullDepth && node->pondedArea > 0)
         {
-          node->oldVolume = node_getVolume(project, j, value);
-        }
-        else
-        {
-          node->oldVolume = node->fullVolume + (node->oldDepth - node->fullDepth) * node->pondedArea;
+          if(value <= node->fullDepth)
+          {
+            node->oldVolume = node_getVolume(project, j, value);
+          }
+          else
+          {
+            node->oldVolume = node->fullVolume + (node->oldDepth - node->fullDepth) * node->pondedArea;
+          }
         }
       }
     }
@@ -206,18 +243,23 @@ void applyCouplingNodeDepths(Project* project)
  */
 void applyCouplingLateralInflows(Project* project)
 {
-  int j;
-  int max = project->Nobjects[NODE];
-
-  for(j = 0; j < max; j++)
+#ifdef USE_OPENMP
+#pragma omp critical (SWMM5)
+#endif
   {
-    double value = 0;
+    int j;
+    int max = project->Nobjects[NODE];
 
-    if(containsNodeLateralInflow(project, j, &value))
+    for(j = 0; j < max; j++)
     {
-      TNode* node = &project->Node[j];
-      node->newLatFlow += value;
-      massbal_addInflowFlow(project, EXTERNAL_INFLOW, value);
+      double value = 0;
+
+      if(containsNodeLateralInflow(project, j, &value))
+      {
+        TNode* node = &project->Node[j];
+        node->newLatFlow += value;
+        massbal_addInflowFlow(project, EXTERNAL_INFLOW, value);
+      }
     }
   }
 }

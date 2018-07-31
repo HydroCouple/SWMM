@@ -58,3 +58,5 @@ CMakeLists.txt.user*
 *.rc
 *.rc
 *.rc
+*.lnk
+*.rc

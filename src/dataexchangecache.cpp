@@ -45,6 +45,7 @@ void addNodeLateralInflow(Project* project, int index, double value)
 
 int containsNodeLateralInflow(Project* project, int index, double* const  value)
 {
+<<<<<<< HEAD
   unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeLateralInflows.find(project);
 
   if (it != NodeLateralInflows.end())
@@ -59,6 +60,25 @@ int containsNodeLateralInflow(Project* project, int index, double* const  value)
       return 1;
     }
   }
+=======
+    if(NodeLateralInflows.size())
+    {
+        unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeLateralInflows.find(project);
+
+        if (it != NodeLateralInflows.end())
+        {
+            unordered_map<int, double > foundProject = (*it).second;
+
+            unordered_map<int, double > ::iterator it1 = foundProject.find(index);
+
+            if (it1 != foundProject.end())
+            {
+                *value = (*it1).second;
+                return 1;
+            }
+        }
+    }
+>>>>>>> e675ea12ef6bf9389868bcfee2f0bf73aba121e9
 
   return 0;
 }
@@ -85,6 +105,7 @@ void addNodeDepth(Project* project, int index, double value)
 
 int containsNodeDepth(Project* project, int index, double* const value)
 {
+<<<<<<< HEAD
   int retVal = 0;
 
   if(NodeDepths.size())
@@ -111,6 +132,27 @@ int containsNodeDepth(Project* project, int index, double* const value)
   }
 
   return retVal;
+=======
+    if(NodeDepths.size())
+    {
+        unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeDepths.find(project);
+
+        if (it != NodeDepths.end())
+        {
+            unordered_map<int, double > foundProject = (*it).second;
+
+            unordered_map<int, double > ::iterator it1 = foundProject.find(index);
+
+            if (it1 != foundProject.end())
+            {
+                *value = (*it1).second;
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+>>>>>>> e675ea12ef6bf9389868bcfee2f0bf73aba121e9
 }
 
 int removeNodeDepth(Project* project, int index)
@@ -187,11 +229,19 @@ void clearDataCache(Project *project)
 #ifdef USE_OPENMP
 #pragma omp critical (SWMM5)
 #endif
+<<<<<<< HEAD
   {
     NodeLateralInflows.erase(project);
     NodeDepths.erase(project);
     SubcatchRainfall.erase(project);
   }
+=======
+    {
+        NodeLateralInflows.erase(project);
+        NodeDepths.erase(project);
+        SubcatchRainfall.erase(project);
+    }
+>>>>>>> e675ea12ef6bf9389868bcfee2f0bf73aba121e9
 }
 
 /*!

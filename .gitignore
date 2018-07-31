@@ -60,3 +60,8 @@ CMakeLists.txt.user*
 *.rc
 *.lnk
 *.rc
+*.rc
+SWMM_resource.rc
+*.rc
+*.ini
+*.rc

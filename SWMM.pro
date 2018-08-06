@@ -39,7 +39,8 @@ INCLUDEPATH += ./include \
 
 HEADERS +=./include/stdafx.h \
           ./include/dataexchangecache.h \
-          ./test/include/swmmtestclass.h
+          ./test/include/swmmtestclass.h \
+          ./include/couplingdatacache.h
 
 SOURCES +=./src/stdafx.cpp \
           ./src/dataexchangecache.cpp \

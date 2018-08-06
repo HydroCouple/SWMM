@@ -22,6 +22,7 @@
 #ifndef DATAEXCHANGECACHE_H
 #define DATAEXCHANGECACHE_H
 
+
 #undef WINDOWS
 #ifdef _WIN32
 #define WINDOWS
@@ -37,12 +38,19 @@
   #define DLLEXPORT
 #endif
 
+
+
+
+typedef struct Project Project;
+
+
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-typedef struct Project Project;
+void initializeCouplingDataCache(Project* project);
 
 void DLLEXPORT addNodeLateralInflow(Project* project, int index, double value);
 int DLLEXPORT containsNodeLateralInflow(Project* project, int index, double* value);
@@ -56,7 +64,9 @@ void DLLEXPORT addSubcatchRain(Project* project, int index, double value);
 int DLLEXPORT containsSubcatchRain(Project* project, int index, double* value);
 int DLLEXPORT removeSubcatchRain(Project* project, int index);
 
-void DLLEXPORT clearDataCache(Project* project);
+void DLLEXPORT clearDataCache(Project *project);
+
+void DLLEXPORT disposeCoupledDataCache(Project* project);
 
 //-----------------------------------------------------------------------------
 //   Coupling Functions

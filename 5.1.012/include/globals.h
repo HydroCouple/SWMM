@@ -652,6 +652,7 @@ struct Project
     double* R;                      // array of pollut. removals
     double* Cin;                    // node inflow concentrations
 
+    void* couplingDataCache;
 };
 
 typedef struct Project Project;

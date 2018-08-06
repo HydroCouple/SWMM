@@ -433,6 +433,7 @@ int DLLEXPORT swmm_start(Project *project, int saveResults)
     // --- initialize state of each major system component
     project_init(project);
 
+
     // --- see if runoff & routing needs to be computed
     if ( project->Nobjects[SUBCATCH] > 0 ) project->DoRunoff = TRUE;
     else project->DoRunoff = FALSE;
@@ -461,6 +462,9 @@ int DLLEXPORT swmm_start(Project *project, int saveResults)
     report_writeOptions(project);
     if ( project->RptFlags.controls ) report_writeControlActionsHeading(project);
     ////
+
+    initializeCouplingDataCache(project);
+
   }
 
 #ifdef EXH                                                                     //(5.1.011)
@@ -670,6 +674,8 @@ int DLLEXPORT swmm_close(Project *project)
 //  Purpose: closes a SWMM project.
 //
 {
+  disposeCoupledDataCache(project);
+
   if ( project->Fout.file ) output_close(project);
   if ( project->IsOpenFlag ) project_close(project);
   report_writeSysTime(project);
@@ -683,7 +689,6 @@ int DLLEXPORT swmm_close(Project *project)
   project->IsOpenFlag = FALSE;
   project->IsStartedFlag = FALSE;
 
-  clearDataCache(project);
 
   return 0;
 }

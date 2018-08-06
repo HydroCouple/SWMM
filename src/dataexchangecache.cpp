@@ -21,188 +21,135 @@
 
 #include "stdafx.h"
 
-#include <map>
-#include <unordered_map>
+
 
 #include "dataexchangecache.h"
 #include "headers.h"
 #include "funcs.h"
+#include "couplingdatacache.h"
 
-using namespace std;
-
-unordered_map<Project*, unordered_map<int, double>> NodeLateralInflows;
-unordered_map<Project*, unordered_map<int, double>> NodeDepths;
-unordered_map<Project*, unordered_map<int, double>> SubcatchRainfall;
-unordered_map<Project*, unordered_map<int, map<double,double>>> XSections;
+#include <unordered_map>
 
 typedef struct OpenMIDataCache OpenMIDataCache;
 
+using namespace std;
+
+void initializeCouplingDataCache(Project *project)
+{
+  if(project->couplingDataCache == nullptr)
+  {
+    CouplingDataCache* couplingDataCache = new CouplingDataCache();
+    project->couplingDataCache = couplingDataCache;
+  }
+}
 //node lateral inflow
 void addNodeLateralInflow(Project* project, int index, double value)
 {
-  NodeLateralInflows[project][index] = value;
+  CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
+  couplingDataCache->NodeLateralInflows[index] = value;
 }
 
 int containsNodeLateralInflow(Project* project, int index, double* const  value)
 {
-  int retVal = 0;
+  CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
 
-  if(NodeLateralInflows.size())
+  unordered_map<int, double >::iterator it = couplingDataCache->NodeLateralInflows.find(index);
+
+  if (it != couplingDataCache->NodeLateralInflows.end())
   {
-#ifdef USE_OPENMP
-#pragma omp critical (SWMM5)
-#endif
-    {
-      unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeLateralInflows.find(project);
-
-      if (it != NodeLateralInflows.end())
-      {
-        unordered_map<int, double > foundProject = (*it).second;
-
-        unordered_map<int, double > ::iterator it1 = foundProject.find(index);
-
-        if (it1 != foundProject.end())
-        {
-          *value = (*it1).second;
-          retVal = 1;
-        }
-      }
-    }
+    *value = (*it).second;
+    return 1;
   }
 
-  return retVal;
+  return 0;
 }
 
 //node lateral inflow
 int removeNodeLateralInflow(Project* project, int index)
 {
-  unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeLateralInflows.find(project);
-
-  if (it != NodeLateralInflows.end())
-  {
-    unordered_map<int, double > foundProject = (*it).second;
-    return foundProject.erase(index);
-  }
-
-  return 0;
+  CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
+  return couplingDataCache->NodeLateralInflows.erase(index);
 }
 
 //Node Depths
 void addNodeDepth(Project* project, int index, double value)
 {
-  NodeDepths[project][index] = value;
+  CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
+  couplingDataCache->NodeDepths[index] = value;
 }
 
 int containsNodeDepth(Project* project, int index, double* const value)
 {
-  int retVal = 0;
+  CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
 
-  if(NodeDepths.size())
+  unordered_map<int, double > ::iterator it = couplingDataCache->NodeDepths.find(index);
+
+  if (it != couplingDataCache->NodeDepths.end())
   {
-#ifdef USE_OPENMP
-#pragma omp critical (SWMM5)
-#endif
-    {
-      unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeDepths.find(project);
-
-      if (it != NodeDepths.end())
-      {
-        unordered_map<int, double > foundProject = (*it).second;
-
-        unordered_map<int, double > ::iterator it1 = foundProject.find(index);
-
-        if (it1 != foundProject.end())
-        {
-          *value = (*it1).second;
-          retVal = 1;
-        }
-      }
-    }
+    *value = (*it).second;
+    return 1;
   }
 
-  return retVal;
+  return 0;
 
 }
 
 int removeNodeDepth(Project* project, int index)
 {
-  unordered_map<Project*, unordered_map<int, double> >::iterator it = NodeDepths.find(project);
-
-  if (it != NodeDepths.end())
-  {
-    unordered_map<int, double > foundProject = (*it).second;
-    return foundProject.erase(index);
-  }
-
-  return 0;
+  CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
+  return couplingDataCache->NodeDepths.erase(index);
 }
 
 //SubcatchRainfall
 void addSubcatchRain(Project* project, int index, double value)
 {
-  SubcatchRainfall[project][index] = value;
+  CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
+  couplingDataCache->SubcatchRainfall[index] = value;
 }
 
 int containsSubcatchRain(Project* project, int index, double* const value)
 {
-  int returnVal = 0;
+  CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
 
-  if(SubcatchRainfall.size())
+  unordered_map<int, double > ::iterator it = couplingDataCache->SubcatchRainfall.find(index);
+
+  if (it != couplingDataCache->SubcatchRainfall.end())
   {
-#ifdef USE_OPENMP
-#pragma omp critical (SWMM5)
-#endif
-    {
-      unordered_map<Project*, unordered_map<int, double> >::iterator it = SubcatchRainfall.find(project);
-
-      if (it != SubcatchRainfall.end())
-      {
-        unordered_map<int, double > foundProject = (*it).second;
-
-        unordered_map<int, double > ::iterator it1 = foundProject.find(index);
-
-        if (it1 != foundProject.end())
-        {
-          *value = (*it1).second;
-          returnVal = 1;
-        }
-      }
-    }
+    *value = (*it).second;
+    return 1;
   }
 
-  return returnVal;
+  return 0;
 }
 
 int removeSubcatchRain(Project* project, int index)
 {
   int removed = 0;
 
-#ifdef USE_OPENMP
-#pragma omp critical (SWMM5)
-#endif
-  {
-    unordered_map<Project*, unordered_map<int, double> >::iterator it = SubcatchRainfall.find(project);
-
-    if (it != SubcatchRainfall.end())
-    {
-      unordered_map<int, double > foundProject = (*it).second;
-      removed = foundProject.erase(index);
-    }
-  }
+  CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
+  removed = couplingDataCache->SubcatchRainfall.erase(index);
 
   return removed;
 }
 
 void clearDataCache(Project *project)
 {
-#ifdef USE_OPENMP
-#pragma omp critical (SWMM5)
-#endif
-  {
-    NodeLateralInflows.erase(project);
-    NodeDepths.erase(project);
-    SubcatchRainfall.erase(project);
-  }
+    CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
+    couplingDataCache->NodeLateralInflows.clear();
+    couplingDataCache->NodeDepths.clear();
+    couplingDataCache->SubcatchRainfall.clear();
+    couplingDataCache->XSections.clear();
+}
+
+void disposeCoupledDataCache(Project *project)
+{
+  CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
+  couplingDataCache->NodeLateralInflows.clear();
+  couplingDataCache->NodeDepths.clear();
+  couplingDataCache->SubcatchRainfall.clear();
+  couplingDataCache->XSections.clear();
+  delete couplingDataCache;
+  project->couplingDataCache = nullptr;
 }
 
 /*!

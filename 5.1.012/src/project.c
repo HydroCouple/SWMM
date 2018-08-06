@@ -300,7 +300,6 @@ void project_close(Project *project)
 {
   deleteObjects(project);
   deleteHashTables(project);
-  clearDataCache(project);
 }
 
 //=============================================================================
@@ -320,6 +319,8 @@ int  project_init(Project *project)
   for (j=0; j<project->Nobjects[SUBCATCH]; j++) subcatch_initState(project, j);
   for (j=0; j<project->Nobjects[NODE]; j++)     node_initState(project,j);
   for (j=0; j<project->Nobjects[LINK]; j++)     link_initState(project,j);
+
+
   return project->ErrorCode;
 }
 
@@ -778,6 +779,7 @@ void initPointers(Project *project)
   project->HortInfil = NULL;
   project->GAInfil = NULL;
   project->CNInfil = NULL;
+  project->couplingDataCache = NULL;
 }
 
 //=============================================================================

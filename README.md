@@ -6,28 +6,52 @@ The EPA Stormwater Management Model refactored to enable multiple instances in t
 ---------------------------------------
 ``` C++
 
- Project *project = nullptr;
+Project *project1 = nullptr;
+Project *project2 = nullptr;
  
- swmm_createProject(&project);
+swmm_createProject(&project1);
+swmm_createProject(&project2);
 
- std::string inpuFileStr = "./../../examples/test1/test1.inp";
- char *inputFile = new char[inpuFileStr.size() + 1];
- std::strcpy(inputFile, inpuFileStr.c_str());
+std::string inpuFileStr = "./../../examples/test1/test1.inp";
+char *inputFile1 = new char[inpuFileStr.size() + 1];
+std::strcpy(inputFile, inpuFileStr.c_str());
 
- std::string reportFileStr = "./../../examples/test1/test1_1.rpt";
- char *reportFile = new char[reportFileStr.size() + 1];
- std::strcpy(reportFile, reportFileStr.c_str());
+std::string reportFileStr1 = "./../../examples/test1/test1_1.rpt";
+char *reportFile1 = new char[reportFileStr1.size() + 1];
+std::strcpy(reportFile1, reportFileStr1.c_str());
 
- std::string outputFileStr = "./../../examples/test1/test1_1.out";
- char *outputFile = new char[outputFileStr.size() + 1];
- std::strcpy(outputFile, outputFileStr.c_str());
+std::string reportFileStr2 = "./../../examples/test1/test1_2.rpt";
+char *reportFile2 = new char[reportFileStr2.size() + 1];
+std::strcpy(reportFile2, reportFileStr2.c_str());
 
- swmm_run(project1, inputFile, reportFile, outputFile);
+std::string outputFileStr1 = "./../../examples/test1/test1_1.out";
+char *outputFile1 = new char[outputFileStr1.size() + 1];
+std::strcpy(outputFile1, outputFileStr1.c_str());
 
- delete[] inputFile;
- delete[] reportFile;
- delete[] outputFile;
+std::string outputFileStr2 = "./../../examples/test1/test1_2.out";
+char *outputFile2 = new char[outputFileStr2.size() + 1];
+std::strcpy(outputFile2, outputFileStr2.c_str());
 
- swmm_deleteProject(project);
+#pragma omp parallel sections
+{
+  #pragma omp section
+  {
+    swmm_run(project1, inputFile, reportFile1, outputFile1);
+  }
+  
+  #pragma omp section
+  {
+    swmm_run(project2, inputFile, reportFile2, outputFile2);
+  }
+}
+
+delete[] inputFile;
+delete[] reportFile1;
+delete[] reportFile2;
+delete[] outputFile1;
+delete[] outputFile2;
+
+swmm_deleteProject(project1);
+swmm_deleteProject(project2);
 
 ```

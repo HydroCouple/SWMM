@@ -134,22 +134,30 @@ int removeSubcatchRain(Project* project, int index)
 
 void clearDataCache(Project *project)
 {
-    CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
+  CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
+
+  if(couplingDataCache)
+  {
     couplingDataCache->NodeLateralInflows.clear();
     couplingDataCache->NodeDepths.clear();
     couplingDataCache->SubcatchRainfall.clear();
     couplingDataCache->XSections.clear();
+  }
 }
 
 void disposeCoupledDataCache(Project *project)
 {
   CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
-  couplingDataCache->NodeLateralInflows.clear();
-  couplingDataCache->NodeDepths.clear();
-  couplingDataCache->SubcatchRainfall.clear();
-  couplingDataCache->XSections.clear();
-  delete couplingDataCache;
-  project->couplingDataCache = nullptr;
+
+  if(couplingDataCache)
+  {
+    couplingDataCache->NodeLateralInflows.clear();
+    couplingDataCache->NodeDepths.clear();
+    couplingDataCache->SubcatchRainfall.clear();
+    couplingDataCache->XSections.clear();
+    delete couplingDataCache;
+    project->couplingDataCache = nullptr;
+  }
 }
 
 /*!

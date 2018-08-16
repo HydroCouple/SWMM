@@ -303,8 +303,13 @@ void lid_delete(Project *project)
 {
     int j;
     for (j = 0; j < project->GroupCount; j++) freeLidGroup(project, j);
+
+    if(project->LidGroups)
     FREE(project->LidGroups);
+
+    if(project->LidProcs)
     FREE(project->LidProcs);
+
     project->GroupCount = 0;
     project->LidCount = 0;
 }

@@ -779,6 +779,14 @@ void initPointers(Project *project)
   project->GAInfil = NULL;
   project->CNInfil = NULL;
   project->couplingDataCache = NULL;
+  project->ActionList = NULL;
+  project->RuleCount = 0;
+  project->Rules = NULL;
+  project->LidCount = 0;
+  project->GroupCount = 0;
+  project->LidGroups = NULL;
+  project->LidProcs = NULL;
+
 }
 
 //=============================================================================

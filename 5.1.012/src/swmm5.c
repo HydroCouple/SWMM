@@ -251,10 +251,13 @@ void DLLEXPORT swmm_createProject(Project **project)
   (*project)->IsStartedFlag = FALSE;
   (*project)->SaveResultsFlag = TRUE;
   (*project)->ErrorCode = 0;
+  (*project)->couplingDataCache = NULL;
+//  (*project)->Htable = malloc(MAX_OBJ_TYPES * sizeof(HTtable*));
 }
 
 void  DLLEXPORT swmm_deleteProject(Project *project)
 {
+  disposeCoupledDataCache(project);
   FREE(project);
 }
 

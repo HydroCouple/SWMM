@@ -47,89 +47,87 @@ SOURCES +=./src/stdafx.cpp \
           ./test/src/swmmtestdriver.cpp \
           ./test/src/swmmtestclass.cpp
 
-equals(VERSION,5.1.012){
+message("SWMM Version: " $$VERSION)
 
-    message("SWMM Version: " $$VERSION)
+INCLUDEPATH += ./$$VERSION/include
 
-    INCLUDEPATH += ./5.1.012/include 
-    
-    HEADERS += ./5.1.012/include/consts.h \
-               ./5.1.012/include/datetime.h \
-               ./5.1.012/include/enums.h \
-               ./5.1.012/include/error.h \
-               ./5.1.012/include/exfil.h \
-               ./5.1.012/include/findroot.h \
-               ./5.1.012/include/funcs.h \
-               ./5.1.012/include/globals.h \
-               ./5.1.012/include/hash.h \
-               ./5.1.012/include/headers.h \
-               ./5.1.012/include/infil.h \
-               ./5.1.012/include/keywords.h \
-               ./5.1.012/include/lid.h \
-               ./5.1.012/include/macros.h \
-               ./5.1.012/include/mathexpr.h \
-               ./5.1.012/include/mempool.h \
-               ./5.1.012/include/objects.h \
-               ./5.1.012/include/odesolve.h \
-               ./5.1.012/include/swmm5.h \
-               ./5.1.012/include/text.h \
-               ./5.1.012/include/xsect.dat \
-               ./swmm5_iface/include/swmm5_iface.h
+HEADERS += ./$$VERSION/include/consts.h \
+           ./$$VERSION/include/datetime.h \
+           ./$$VERSION/include/enums.h \
+           ./$$VERSION/include/error.h \
+           ./$$VERSION/include/exfil.h \
+           ./$$VERSION/include/findroot.h \
+           ./$$VERSION/include/funcs.h \
+           ./$$VERSION/include/globals.h \
+           ./$$VERSION/include/hash.h \
+           ./$$VERSION/include/headers.h \
+           ./$$VERSION/include/infil.h \
+           ./$$VERSION/include/keywords.h \
+           ./$$VERSION/include/lid.h \
+           ./$$VERSION/include/macros.h \
+           ./$$VERSION/include/mathexpr.h \
+           ./$$VERSION/include/mempool.h \
+           ./$$VERSION/include/objects.h \
+           ./$$VERSION/include/odesolve.h \
+           ./$$VERSION/include/swmm5.h \
+           ./$$VERSION/include/text.h \
+           ./$$VERSION/include/xsect.dat \
+           ./swmm5_iface/include/swmm5_iface.h
 
-    SOURCES += ./5.1.012/src/climate.c \
-               ./5.1.012/src/controls.c \
-               ./5.1.012/src/culvert.c \
-               ./5.1.012/src/datetime.c \
-               ./5.1.012/src/dwflow.c \
-               ./5.1.012/src/dynwave.c \
-               ./5.1.012/src/error.c \
-               ./5.1.012/src/exfil.c \
-               ./5.1.012/src/findroot.c \
-               ./5.1.012/src/flowrout.c \
-               ./5.1.012/src/forcmain.c \
-               ./5.1.012/src/gage.c \
-               ./5.1.012/src/gwater.c \
-               ./5.1.012/src/hash.c \
-               ./5.1.012/src/hotstart.c \
-               ./5.1.012/src/iface.c \
-               ./5.1.012/src/infil.c \
-               ./5.1.012/src/inflow.c \
-               ./5.1.012/src/input.c \
-               ./5.1.012/src/inputrpt.c \
-               ./5.1.012/src/keywords.c \
-               ./5.1.012/src/kinwave.c \
-               ./5.1.012/src/landuse.c \
-               ./5.1.012/src/lid.c \
-               ./5.1.012/src/lidproc.c \
-               ./5.1.012/src/link.c \
-               ./5.1.012/src/massbal.c \
-               ./5.1.012/src/mathexpr.c \
-               ./5.1.012/src/mempool.c \
-               ./5.1.012/src/node.c \
-               ./5.1.012/src/odesolve.c \
-               ./5.1.012/src/output.c \
-               ./5.1.012/src/project.c \
-               ./5.1.012/src/qualrout.c \
-               ./5.1.012/src/rain.c \
-               ./5.1.012/src/rdii.c \
-               ./5.1.012/src/report.c \
-               ./5.1.012/src/roadway.c \
-               ./5.1.012/src/routing.c \
-               ./5.1.012/src/runoff.c \
-               ./5.1.012/src/shape.c \
-               ./5.1.012/src/snow.c \
-               ./5.1.012/src/stats.c \
-               ./5.1.012/src/statsrpt.c \
-               ./5.1.012/src/subcatch.c \
-               ./5.1.012/src/surfqual.c \
-               ./5.1.012/src/swmm5.c \
-               ./5.1.012/src/table.c \
-               ./5.1.012/src/toposort.c \
-               ./5.1.012/src/transect.c \
-               ./5.1.012/src/treatmnt.c \
-               ./5.1.012/src/xsect.c \
-               ./swmm5_iface/src/swmm5_iface.c
-}
+SOURCES += ./$$VERSION/src/climate.c \
+           ./$$VERSION/src/controls.c \
+           ./$$VERSION/src/culvert.c \
+           ./$$VERSION/src/datetime.c \
+           ./$$VERSION/src/dwflow.c \
+           ./$$VERSION/src/dynwave.c \
+           ./$$VERSION/src/error.c \
+           ./$$VERSION/src/exfil.c \
+           ./$$VERSION/src/findroot.c \
+           ./$$VERSION/src/flowrout.c \
+           ./$$VERSION/src/forcmain.c \
+           ./$$VERSION/src/gage.c \
+           ./$$VERSION/src/gwater.c \
+           ./$$VERSION/src/hash.c \
+           ./$$VERSION/src/hotstart.c \
+           ./$$VERSION/src/iface.c \
+           ./$$VERSION/src/infil.c \
+           ./$$VERSION/src/inflow.c \
+           ./$$VERSION/src/input.c \
+           ./$$VERSION/src/inputrpt.c \
+           ./$$VERSION/src/keywords.c \
+           ./$$VERSION/src/kinwave.c \
+           ./$$VERSION/src/landuse.c \
+           ./$$VERSION/src/lid.c \
+           ./$$VERSION/src/lidproc.c \
+           ./$$VERSION/src/link.c \
+           ./$$VERSION/src/massbal.c \
+           ./$$VERSION/src/mathexpr.c \
+           ./$$VERSION/src/mempool.c \
+           ./$$VERSION/src/node.c \
+           ./$$VERSION/src/odesolve.c \
+           ./$$VERSION/src/output.c \
+           ./$$VERSION/src/project.c \
+           ./$$VERSION/src/qualrout.c \
+           ./$$VERSION/src/rain.c \
+           ./$$VERSION/src/rdii.c \
+           ./$$VERSION/src/report.c \
+           ./$$VERSION/src/roadway.c \
+           ./$$VERSION/src/routing.c \
+           ./$$VERSION/src/runoff.c \
+           ./$$VERSION/src/shape.c \
+           ./$$VERSION/src/snow.c \
+           ./$$VERSION/src/stats.c \
+           ./$$VERSION/src/statsrpt.c \
+           ./$$VERSION/src/subcatch.c \
+           ./$$VERSION/src/surfqual.c \
+           ./$$VERSION/src/swmm5.c \
+           ./$$VERSION/src/table.c \
+           ./$$VERSION/src/toposort.c \
+           ./$$VERSION/src/transect.c \
+           ./$$VERSION/src/treatmnt.c \
+           ./$$VERSION/src/xsect.c \
+           ./swmm5_iface/src/swmm5_iface.c
+
 
 
 macx{

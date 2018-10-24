@@ -38,8 +38,8 @@
 //   - New getTimeStamp function added.
 //-----------------------------------------------------------------------------
 
-#ifndef DATETIME_H
-#define DATETIME_H
+#ifndef SWMMDATETIME_H
+#define SWMMDATETIME_H
 
 #undef WINDOWS
 #ifdef _WIN32
@@ -110,4 +110,4 @@ long     datetime_timeDiff(DateTime date1, DateTime date2);
 }   // matches the linkage specification from above */
 #endif
 
-#endif //DATETIME_H
+#endif //SWMMDATETIME_H

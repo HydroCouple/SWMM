@@ -471,7 +471,7 @@ double  xsect_getRofA(Project *project, TXsect* xsect, double area);
 double  xsect_getAofS(Project *project, TXsect* xsect, double sFactor);
 double  xsect_getdSdA(Project *project, TXsect* xsect, double area);
 double  DLLEXPORT xsect_getAofY(Project *project, TXsect* xsect, double y);
-double  xsect_getRofY(Project *project, TXsect* xsect, double y);
+double  DLLEXPORT xsect_getRofY(Project *project, TXsect* xsect, double y);
 double  DLLEXPORT xsect_getWofY(Project *project, TXsect* xsect, double y);
 double  xsect_getYcrit(Project *project, TXsect* xsect, double q);
 

@@ -1,5 +1,5 @@
 # SWMM
-The EPA Stormwater Management Model refactored to enable multiple instances in the same program. Global variables have been encapsulated in a new structure so that independent instances on SWMM projects can be initialized and executed concurrently.
+The EPA Stormwater Management Model refactored to be thread safe so that multiple instances of SWMM simulations can be conducted in the same program. Global variables have been encapsulated in a new structure so that independent instances on SWMM projects can be initialized and executed concurrently.
 
 
 ### Sample Code

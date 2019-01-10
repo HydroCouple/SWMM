@@ -541,7 +541,7 @@ void updateNodeFlows(Project *project, int i)
     int    barrels = 1;
     int    n1 = project->Link[i].node1;
     int    n2 = project->Link[i].node2;
-    double q = project->Link[i].newFlow;
+    double q  = project->Link[i].newFlow;
     double uniformLossRate = 0.0;
 
     // --- compute any uniform seepage loss from a conduit

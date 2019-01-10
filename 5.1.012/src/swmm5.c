@@ -763,7 +763,8 @@ int  DLLEXPORT swmm_getError(Project *project, char* errMsg, int msgLen)
   size_t errMsgLen = msgLen;
 
   // --- copy text of last error message into errMsg
-  if ( project->ErrorCode > 0 && strlen(project->ErrorMsg) == 0 ) sstrncpy(errMsg, "", 1);
+  if (project->ErrorCode > 0 && strlen(project->ErrorMsg) == 0 )
+    sstrncpy(errMsg, "", 1);
   else
   {
     errMsgLen = MIN(errMsgLen, strlen(project->ErrorMsg));

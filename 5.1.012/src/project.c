@@ -154,7 +154,7 @@ void project_readInput(Project *project)
   createObjects(project);
 
   // --- read project data from input file
-  input_readData(project);
+   input_readData(project);
   if ( project->ErrorCode ) return;
 
   // --- establish starting & ending date/time

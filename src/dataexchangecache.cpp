@@ -40,13 +40,21 @@ void initializeCouplingDataCache(Project *project)
   {
     CouplingDataCache* couplingDataCache = new CouplingDataCache();
     project->couplingDataCache = couplingDataCache;
+
+    int max = project->Nobjects[NODE];
+
+    for (int j = 0; j < max; j++)
+    {
+      couplingDataCache->NodeLateralInflows[j] = 0.0;
+    }
   }
 }
+
 //node lateral inflow
 void addNodeLateralInflow(Project* project, int index, double value)
 {
   CouplingDataCache* couplingDataCache  = (CouplingDataCache*)project->couplingDataCache;
-  couplingDataCache->NodeLateralInflows[index] = value;
+  couplingDataCache->NodeLateralInflows[index] += value;
 }
 
 int containsNodeLateralInflow(Project* project, int index, double* const  value)
@@ -138,7 +146,13 @@ void clearDataCache(Project *project)
 
   if(couplingDataCache)
   {
-    couplingDataCache->NodeLateralInflows.clear();
+    int max = project->Nobjects[NODE];
+
+    for (int j = 0; j < max; j++)
+    {
+      couplingDataCache->NodeLateralInflows[j] = 0.0;
+    }
+
     couplingDataCache->NodeDepths.clear();
     couplingDataCache->SubcatchRainfall.clear();
     couplingDataCache->XSections.clear();

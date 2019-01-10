@@ -185,9 +185,16 @@ enum  ErrorType {
 
       MAXERRMSG};
       
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 char* error_getMsg(int i);
 int   error_getCode(int i);
 int   error_setInpError(int errcode, char* s);
 
+#ifdef __cplusplus
+}   // matches the linkage specification from above */
+#endif
 
 #endif //ERROR_H

@@ -33,6 +33,17 @@
 #ifndef ERROR_H
 #define ERROR_H
 
+#ifdef _WIN32
+#define DLLEXPORT __declspec(dllexport)
+#else
+#if __GNUC__ >= 4
+#define DLLEXPORT __attribute__ ((visibility ("default")))
+#else
+#define DLLEXPORT
+#define DLLEXPORT_S
+#endif
+#endif
+
 enum  ErrorType {
 
   //... Runtime Errors
@@ -189,9 +200,9 @@ enum  ErrorType {
 extern "C" {
 #endif
 
-char* error_getMsg(int i);
-int   error_getCode(int i);
-int   error_setInpError(int errcode, char* s);
+DLLEXPORT char *error_getMsg(int i);
+int  DLLEXPORT error_getCode(int i);
+int  DLLEXPORT error_setInpError(int errcode, char* s);
 
 #ifdef __cplusplus
 }   // matches the linkage specification from above */
